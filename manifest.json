@@ -1,9 +1,10 @@
 {
   "name": "福岡月光冒險行程",
   "short_name": "福岡行程",
-  "start_url": "index.html",
+  "start_url": "./index.html",
+  "scope": ".",
   "display": "standalone",
-  "background_color": "#a18cd1",
+  "background_color": "#1a0a2e",
   "theme_color": "#ff85a2",
   "icons": [
     {
