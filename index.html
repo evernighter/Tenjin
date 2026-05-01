@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+    <script>
+        // 解決 iOS PWA 網址末端 index.html 問題：強制跳轉到乾淨的目錄網址
+        if (window.location.pathname.endsWith('index.html')) {
+            const cleanPath = window.location.pathname.replace('index.html', '');
+            window.location.replace(cleanPath);
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>福岡·月光冒險之旅</title>
     
-    <!-- iOS PWA 設定 -->
+    <!-- iOS PWA 必備設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="福岡行程">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="canonical" href="./">
     
     <link rel="manifest" href="./manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
@@ -39,7 +47,7 @@
             flex-direction: column;
         }
 
-        /* 浮動的背景守護星符號 */
+        /* 背景浮動守護星符號 */
         .bg-symbols {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: -1; opacity: 0.4;
@@ -53,6 +61,7 @@
             50% { opacity: 0.7; transform: scale(1.3) rotate(15deg); }
         }
 
+        /* 標題列 */
         header {
             background: rgba(26, 10, 46, 0.85);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -62,15 +71,16 @@
         }
         header h1 { margin: 0; font-size: 1.3rem; letter-spacing: 5px; text-shadow: var(--text-glow); }
 
+        /* 內容區 */
         .main-content {
             flex: 1; overflow-y: auto; padding: 20px; position: relative;
             -webkit-overflow-scrolling: touch;
         }
 
-        .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 120px; }
+        .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 150px; }
         .day-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
 
-        /* 角色圖像 */
+        /* 角色圖片裝飾 */
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
             width: 190px; z-index: 1; opacity: 0.9;
@@ -83,12 +93,13 @@
             50% { transform: translate(-15px, -25px) rotate(5deg); }
         }
 
+        /* 行程卡片 */
         .card {
             background: var(--glass-white);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 25px; margin-bottom: 20px;
             border: 1px solid var(--glass-border);
-            z-index: 2; position: relative;
+            position: relative; z-index: 2;
         }
         .card-header {
             padding: 18px; color: #fff; font-weight: bold; border-radius: 24px 24px 0 0;
@@ -116,6 +127,7 @@
             color: var(--sailor-pink); font-weight: bold;
         }
 
+        /* 導航列 */
         nav {
             background: rgba(26, 10, 46, 0.96); height: 95px;
             display: flex; justify-content: space-around; align-items: center;
@@ -130,21 +142,22 @@
             margin-bottom: 6px; background: rgba(255, 255, 255, 0.05); font-size: 1.5rem; transition: 0.4s;
         }
         .nav-item.active .icon-circle {
-            background: var(--soft-purple); color: var(--moon-gold); transform: scale(1.1) translateY(-8px);
-            box-shadow: 0 0 20px var(--soft-purple); border: 1px solid var(--moon-gold);
+            background: var(--soft-purple); color: var(--moon-gold); transform: scale(1.15) translateY(-8px);
+            box-shadow: 0 0 25px var(--soft-purple); border: 1px solid var(--moon-gold);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="bg-symbols">
-    <div class="bg-symbol" style="top:15%; left:10%;">🌙</div>
+    <div class="bg-symbol" style="top:10%; left:10%;">🌙</div>
     <div class="bg-symbol" style="top:25%; right:15%;">☿</div>
     <div class="bg-symbol" style="top:55%; left:25%;">♀</div>
     <div class="bg-symbol" style="top:75%; right:12%;">♂</div>
     <div class="bg-symbol" style="top:40%; left:55%;">♃</div>
+    <div class="bg-symbol" style="top:85%; left:45%;">♄</div>
 </div>
 
 <header>
@@ -152,53 +165,57 @@
 </header>
 
 <div class="main-content">
+    <!-- Day 1 -->
     <div id="day1" class="day-panel active">
         <div class="card">
-            <div class="card-header theme-moon">🌙 Day 1: 天神商圈</div>
+            <div class="card-header theme-moon">🌙 Day 1: 月亮威力・天神商圈</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
-                <div class="time-item"><h3>機場午餐 & 天神地下街</h3><p>搭地鐵至天神站，逛地下街直通 PARCO 搜刮動漫周邊。</p></div>
-                <div class="time-item"><h3>天神三大百貨</h3><p>岩田屋、三越、大丸。攻略精品與地下食品賣場。</p></div>
+                <div class="time-item"><h3>中午：機場午餐 & 天神地下街</h3><p>機場先享用午餐，搭地鐵至「天神站」Check-in。逛天神地下街直通 福岡PARCO，搜刮動漫周邊與人氣角色商品！</p></div>
+                <div class="time-item"><h3>晚上：天神三大百貨公司攻略</h3><p>岩田屋本店、福岡三越、大丸福岡天神。尋找國際精品與化妝品，必逛地下食品賣場 (Depachika)。</p></div>
             </div>
         </div>
-        <img src="assets/1.png" class="character-img" alt="1">
+        <img src="assets/1.png" class="character-img" alt="Moon">
     </div>
 
+    <!-- Day 2 -->
     <div id="day2" class="day-panel">
         <div class="card">
-            <div class="card-header theme-mercury">☿ Day 2: 博多與鋼彈</div>
+            <div class="card-header theme-mercury">☿ Day 2: 水與火・博多鋼彈</div>
             <div class="card-body">
-                <div class="transport-tag">🚇 JR / 七隈線</div>
-                <div class="time-item"><h3>博多車站購物群</h3><p>AMU PLAZA、博多阪急。午餐推薦「拉麵街道」。</p></div>
-                <div class="time-item"><h3>三井LaLaport 福岡</h3><p>搭 JR 到竹下站朝聖 1:1 巨型鋼彈。</p></div>
-                <div class="time-item"><h3>博多運河城</h3><p>觀賞音樂噴泉匯演，搜集精緻日系小物。</p></div>
+                <div class="transport-tag">🚇 JR / 地鐵七隈線</div>
+                <div class="time-item"><h3>早上 - 中午：博多車站購物群</h3><p>逛 AMU PLAZA 與博多阪急。午餐推薦 KITTE博多 或博多DEITOS 的「拉麵街道」。</p></div>
+                <div class="time-item"><h3>下午：三井LaLaport 福岡</h3><p>搭 JR 到「竹下站」步行 9 分鐘，朝聖 1:1 實體大鋼彈！</p></div>
+                <div class="time-item"><h3>晚上：博多運河城 Canal City</h3><p>觀賞音樂噴泉匯演，搜集日系品牌精緻小物與周邊商品。</p></div>
             </div>
         </div>
-        <img src="assets/2.png" class="character-img" alt="2">
+        <img src="assets/2.png" class="character-img" alt="Mercury">
     </div>
 
+    <!-- Day 3 -->
     <div id="day3" class="day-panel">
         <div class="card">
-            <div class="card-header theme-jupiter">♃ Day 3: 河畔與海濱</div>
+            <div class="card-header theme-jupiter">♃ Day 3: 雷鳴與愛・河畔藝文</div>
             <div class="card-body">
-                <div class="transport-tag">🚇 地鐵 / 公車</div>
-                <div class="time-item"><h3>博多河岸購物中心</h3><p>中洲川端站直結。享受藝文精品與優雅咖啡。</p></div>
-                <div class="time-item"><h3>MARK IS 福岡MOMOCHI</h3><p>福岡塔旁大型商場，選購戶外品牌與電子產品。</p></div>
-                <div class="time-item"><h3>Bayside Place 博多</h3><p>看夜景、賞水族柱，品嚐新鮮海產。</p></div>
+                <div class="transport-tag">🚇 地鐵 / 西鐵公車</div>
+                <div class="time-item"><h3>早上：博多河岸購物中心</h3><p>「中洲川端站」直結。探索質感生活選物與藝文精品，享受優雅咖啡時光。</p></div>
+                <div class="time-item"><h3>下午：MARK IS 福岡MOMOCHI</h3><p>福岡塔旁的大型商場，選購戶外運動品牌與消費性電子產品。</p></div>
+                <div class="time-item"><h3>晚上：Bayside Place 博多</h3><p>吹海風看夜景與水族柱，品嚐新鮮海產，劃下完美句點。</p></div>
             </div>
         </div>
-        <img src="assets/3.png" class="character-img" alt="3">
+        <img src="assets/3.png" class="character-img" alt="Venus">
     </div>
 
+    <!-- Day 4 -->
     <div id="day4" class="day-panel">
         <div class="card">
-            <div class="card-header theme-chibi">💖 Day 4: 返程衝刺</div>
+            <div class="card-header theme-chibi">💖 Day 4: 未來之門・返航</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
-                <div class="time-item"><h3>福岡機場免稅店</h3><p>最後衝刺！將所有伴手禮與回憶帶回家。</p></div>
+                <div class="time-item"><h3>福岡機場國際航廈</h3><p>搭乘地鐵直達機場。過海關後，在免稅店進行最後衝刺，帶著戰利品與回憶閃耀回家！</p></div>
             </div>
         </div>
-        <img src="assets/4.png" class="character-img" alt="4">
+        <img src="assets/4.png" class="character-img" alt="Chibimoon">
     </div>
 </div>
 
@@ -218,12 +235,6 @@
 </nav>
 
 <script>
-    // 修正網址末端 index.html 問題
-    if (window.location.pathname.endsWith('index.html')) {
-        const newPath = window.location.pathname.replace('index.html', '');
-        window.history.replaceState({}, '', newPath);
-    }
-
     // 註冊 Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -231,6 +242,7 @@
         });
     }
 
+    // 分頁切換
     function showDay(dayNum, element) {
         document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
         document.getElementById('day' + dayNum).classList.add('active');
@@ -239,5 +251,6 @@
         document.querySelector('.main-content').scrollTop = 0;
     }
 </script>
+
 </body>
 </html>
