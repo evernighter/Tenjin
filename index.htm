@@ -15,13 +15,14 @@
 
     <style>
         :root {
-            --moon-pink: #ffadd2;
+            /* 粉紫色系調色盤 */
+            --main-purple: #4b0082;
+            --soft-purple: #7b4397;
+            --sailor-pink: #ff85a2;
             --moon-gold: #f9d423;
-            --mercury-blue: #4facfe;
-            --mars-red: #ff4b2b;
-            --jupiter-green: #00b09b;
-            --venus-orange: #f8ad4e;
-            --bg-dark: #1a1a2e;
+            --crystal-bg: rgba(255, 182, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-glow: 0 0 10px rgba(255, 133, 162, 0.8);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
@@ -30,39 +31,54 @@
             margin: 0;
             padding: 0;
             font-family: 'Noto Sans TC', sans-serif;
-            background: var(--bg-dark);
-            color: #333;
+            /* 背景改為粉紫漸層星空 */
+            background: linear-gradient(135deg, #1a0a2e 0%, #4a1d64 50%, #2a0a2e 100%);
+            color: #fff;
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* 閃爍星空背景 */
-        body::before {
-            content: "";
+        /* 浮動的守護星背景裝飾 */
+        .bg-symbols {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.4;
+            pointer-events: none;
             z-index: -1;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+
+        .bg-symbol {
+            position: absolute;
+            color: var(--sailor-pink);
+            font-size: 2rem;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
         }
 
         header {
-            background: linear-gradient(to bottom, #2a2a72, #1a1a2e);
+            background: rgba(26, 10, 46, 0.8);
+            backdrop-filter: blur(10px);
             color: var(--moon-gold);
             padding: 55px 20px 15px;
             text-align: center;
-            border-bottom: 2px solid var(--moon-gold);
+            border-bottom: 2px solid var(--sailor-pink);
             z-index: 10;
+            box-shadow: 0 4px 20px rgba(255, 133, 162, 0.3);
         }
 
         header h1 {
-            margin: 0; font-size: 1.3rem; letter-spacing: 4px;
-            text-shadow: 0 0 10px rgba(249, 212, 35, 0.8);
+            margin: 0; font-size: 1.3rem; letter-spacing: 5px;
+            text-shadow: var(--text-glow);
+            font-weight: 700;
         }
 
-        /* 內容區塊 */
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -75,238 +91,3 @@
             position: relative;
             min-height: 100%;
         }
-
-        .day-panel.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        /* 角色裝飾圖案樣式 */
-        .character-img {
-            position: absolute;
-            bottom: -10px;
-            right: -10px;
-            width: 180px; /* 圖片大小 */
-            height: auto;
-            z-index: 1;
-            opacity: 0.9;
-            pointer-events: none; /* 防止遮擋點擊 */
-            animation: float 4s ease-in-out infinite;
-        }
-
-        /* 漂浮動畫 */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* 行程卡片優化 */
-        .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            z-index: 2; /* 讓文字在圖片上面 */
-        }
-
-        .card-header {
-            padding: 15px;
-            color: white;
-            font-weight: bold;
-            border-radius: 18px 18px 0 0;
-            display: flex;
-            align-items: center;
-        }
-
-        /* 各戰士主題色 */
-        .theme-moon { background: linear-gradient(90deg, #ff85a2, #f9d423); }
-        .theme-mercury { background: linear-gradient(90deg, #4facfe, #00f2fe); }
-        .theme-mars { background: linear-gradient(90deg, #ff4b2b, #ff416c); }
-        .theme-jupiter { background: linear-gradient(90deg, #00b09b, #96c93d); }
-        .theme-venus { background: linear-gradient(90deg, #f8ad4e, #f1e767); }
-
-        .card-body { padding: 20px; }
-
-        .time-item {
-            margin-bottom: 15px;
-            padding-left: 15px;
-            border-left: 3px solid var(--moon-pink);
-        }
-
-        .time-item h3 { margin: 0; font-size: 1.05rem; color: #2a2a72; }
-        .time-item p { margin: 5px 0 0; font-size: 0.9rem; line-height: 1.5; color: #444; font-weight: 500; }
-
-        .transport-tag {
-            background: rgba(42, 42, 114, 0.1);
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            margin-bottom: 12px;
-            display: inline-block;
-            border: 1px solid rgba(42, 42, 114, 0.2);
-        }
-
-        /* 底部導航欄位 */
-        nav {
-            background: rgba(26, 26, 46, 0.95);
-            height: 85px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid var(--moon-gold);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #aaa;
-            text-decoration: none;
-            font-size: 0.7rem;
-            flex: 1;
-        }
-
-        .nav-item.active { color: var(--moon-pink); }
-
-        .icon-circle {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 4px;
-            background: rgba(255,255,255,0.1);
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
-
-        .nav-item.active .icon-circle {
-            background: var(--moon-pink);
-            color: white;
-            box-shadow: 0 0 15px var(--moon-pink);
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>SAILOR FUKUOKA</h1>
-</header>
-
-<div class="main-content">
-    
-    <!-- Day 1: Sailor Moon -->
-    <div id="day1" class="day-panel active">
-        <div class="card">
-            <div class="card-header theme-moon">🌙 Day 1: 月亮威力</div>
-            <div class="card-body">
-                <div class="transport-tag">🚇 地鐵空港線</div>
-                <div class="time-item">
-                    <h3>中午：天神地下街 & PARCO</h3>
-                    <p>直奔天神地下街，PARCO 裡面的動漫精品店絕對不能錯過！</p>
-                </div>
-                <div class="time-item">
-                    <h3>晚上：天神百貨攻略</h3>
-                    <p>岩田屋、三越、大丸。享受精品與美食盛宴。</p>
-                </div>
-            </div>
-        </div>
-        <!-- 角色裝飾圖 -->
-        <img src="assets/1.png" class="character-img" alt="Sailor Moon">
-    </div>
-
-    <!-- Day 2: Sailor Mercury & Mars -->
-    <div id="day2" class="day-panel">
-        <div class="card">
-            <div class="card-header theme-mercury">☿ Day 2: 水與火之戰</div>
-            <div class="card-body">
-                <div class="transport-tag">🚇 JR / 地鐵七隈線</div>
-                <div class="time-item">
-                    <h3>早上：博多車站 AMU PLAZA</h3>
-                    <p>博多阪急購物，中午吃拉麵街道。</p>
-                </div>
-                <div class="time-item">
-                    <h3>下午：三井LaLaport</h3>
-                    <p>朝聖實體大鋼彈，這也是一種戰士的熱血！</p>
-                </div>
-            </div>
-        </div>
-        <img src="assets/2.png" class="character-img" alt="Sailor Mercury">
-    </div>
-
-    <!-- Day 3: Sailor Jupiter & Venus -->
-    <div id="day3" class="day-panel">
-        <div class="card">
-            <div class="card-header theme-jupiter">♃ Day 3: 愛與雷鳴</div>
-            <div class="card-body">
-                <div class="transport-tag">🚇 地鐵 / 公車</div>
-                <div class="time-item">
-                    <h3>上午：河岸購物中心</h3>
-                    <p>充滿質感的藝文精品與優雅咖啡廳。</p>
-                </div>
-                <div class="time-item">
-                    <h3>晚上：灣岸廣場夜景</h3>
-                    <p>吹海風、看夜景，這是最浪漫的尾聲。</p>
-                </div>
-            </div>
-        </div>
-        <img src="assets/3.png" class="character-img" alt="Sailor Venus">
-    </div>
-
-    <!-- Day 4: Chibi Moon -->
-    <div id="day4" class="day-panel">
-        <div class="card">
-            <div class="card-header theme-moon">💖 Day 4: 未來之門</div>
-            <div class="card-body">
-                <div class="transport-tag">🚇 地鐵直達</div>
-                <div class="time-item">
-                    <h3>福岡機場最後衝刺</h3>
-                    <p>免稅店最後採購，準備搭乘時空飛船回到溫暖的家。</p>
-                </div>
-            </div>
-        </div>
-        <img src="assets/4.png" class="character-img" alt="Chibi Moon">
-    </div>
-
-</div>
-
-<nav>
-    <a href="javascript:void(0)" class="nav-item active" onclick="showDay(1, this)">
-        <div class="icon-circle">🌙</div>
-        <span>天神</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(2, this)">
-        <div class="icon-circle">☿</div>
-        <span>博多</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(3, this)">
-        <div class="icon-circle">♃</div>
-        <span>海濱</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(4, this)">
-        <div class="icon-circle">💖</div>
-        <span>回程</span>
-    </a>
-</nav>
-
-<script>
-    function showDay(dayNum, element) {
-        document.querySelectorAll('.day-panel').forEach(panel => panel.classList.remove('active'));
-        document.getElementById('day' + dayNum).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-    }
-</script>
-
-</body>
-</html>
