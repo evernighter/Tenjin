@@ -91,3 +91,285 @@
             position: relative;
             min-height: 100%;
         }
+
+        .day-panel.active {
+            display: block;
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 角色圖像動畫優化 */
+        .character-img {
+            position: fixed;
+            bottom: 90px;
+            right: -10px;
+            width: 200px;
+            z-index: 1;
+            opacity: 0.85;
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px var(--soft-purple));
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-10px, -20px) rotate(3deg); }
+        }
+
+        /* 卡片設計：粉紫玻璃擬態 */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            border: 1.5px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-header {
+            padding: 18px;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        /* 主題顏色優化（粉紫色系） */
+        .theme-moon { background: linear-gradient(90deg, #ff85a2, #7b4397); }
+        .theme-mercury { background: linear-gradient(90deg, #4facfe, #7b4397); }
+        .theme-mars { background: linear-gradient(90deg, #ff4b2b, #7b4397); }
+        .theme-jupiter { background: linear-gradient(90deg, #00b09b, #7b4397); }
+
+        .card-body { padding: 22px; }
+
+        .time-item {
+            margin-bottom: 20px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        /* 使用守護星符號作為清單標記 */
+        .time-item::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--moon-gold);
+            font-size: 1rem;
+            text-shadow: 0 0 8px var(--moon-gold);
+        }
+
+        .time-item h3 { 
+            margin: 0; font-size: 1.1rem; 
+            color: var(--moon-gold); 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .time-item p { 
+            margin: 6px 0 0; font-size: 0.95rem; 
+            line-height: 1.6; color: #eee; 
+        }
+
+        .transport-tag {
+            background: rgba(255, 133, 162, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            border: 1px solid var(--sailor-pink);
+            color: var(--sailor-pink);
+            font-weight: bold;
+        }
+
+        /* 底部導航欄：深紫色調 */
+        nav {
+            background: rgba(26, 10, 46, 0.95);
+            height: 90px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 2px solid var(--soft-purple);
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 20;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--soft-purple);
+            text-decoration: none;
+            font-size: 0.75rem;
+            flex: 1;
+            transition: 0.3s;
+        }
+
+        .nav-item.active { color: var(--moon-gold); }
+
+        .icon-circle {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 1.4rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
+        }
+
+        .nav-item.active .icon-circle {
+            background: var(--soft-purple);
+            color: var(--moon-gold);
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 0 20px var(--soft-purple);
+            border: 1px solid var(--moon-gold);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 背景漂浮符號 -->
+<div class="bg-symbols">
+    <div class="bg-symbol" style="top:10%; left:10%;">🌙</div>
+    <div class="bg-symbol" style="top:30%; right:15%;">☿</div>
+    <div class="bg-symbol" style="top:60%; left:20%;">♀</div>
+    <div class="bg-symbol" style="top:80%; right:10%;">♂</div>
+    <div class="bg-symbol" style="top:45%; left:50%;">♃</div>
+</div>
+
+<header>
+    <h1>🌙 SAILOR FUKUOKA 🌙</h1>
+</header>
+
+<div class="main-content">
+    
+    <!-- Day 1: Sailor Moon -->
+    <div id="day1" class="day-panel active">
+        <div class="card">
+            <div class="card-header theme-moon">🌙 第一天：月亮力量與天神</div>
+            <div class="card-body">
+                <div class="transport-tag">🚇 地鐵空港線</div>
+                <div class="time-item">
+                    <h3>機場午餐 & 天神地下街</h3>
+                    <p>抵達後前往天神 Check-in。逛地下街並直通 福岡PARCO，搜刮心愛的動漫角色周邊。</p>
+                </div>
+                <div class="time-item">
+                    <h3>天神三大百貨公司</h3>
+                    <p>岩田屋、三越、大丸。攻略化妝品與地下食品賣場，滿足購物慾！</p>
+                </div>
+            </div>
+        </div>
+        <img src="assets/1.png" class="character-img" alt="Moon">
+    </div>
+
+    <!-- Day 2: Mercury & Mars -->
+    <div id="day2" class="day-panel">
+        <div class="card">
+            <div class="card-header theme-mercury">☿ 第二天：水與火之星博多</div>
+            <div class="card-body">
+                <div class="transport-tag">🚇 JR / 地鐵七隈線</div>
+                <div class="time-item">
+                    <h3>博多車站購物群</h3>
+                    <p>AMU PLAZA博多、博多阪急。午餐就在「博多麵街道」解決吧！</p>
+                </div>
+                <div class="time-item">
+                    <h3>三井LaLaport 福岡</h3>
+                    <p>前往竹下站朝聖巨型鋼彈。這是充滿戰鬥氣息的一站！</p>
+                </div>
+                <div class="time-item">
+                    <h3>博多運河城</h3>
+                    <p>噴泉匯演與精緻小物。像戰士一樣精準捕捉所有心儀商品。</p>
+                </div>
+            </div>
+        </div>
+        <img src="assets/2.png" class="character-img" alt="Mercury">
+    </div>
+
+    <!-- Day 3: Jupiter & Venus -->
+    <div id="day3" class="day-panel">
+        <div class="card">
+            <div class="card-header theme-jupiter">♃ 第三天：愛與雷鳴的海濱</div>
+            <div class="card-body">
+                <div class="transport-tag">🚇 地鐵 / 公車</div>
+                <div class="time-item">
+                    <h3>博多河岸購物中心</h3>
+                    <p>「中洲川端站」直結。享受藝文精品與優雅的咖啡時光。</p>
+                </div>
+                <div class="time-item">
+                    <h3>MARK IS 福岡MOMOCHI</h3>
+                    <p>福岡塔旁的巨型商場，適合探索科技與運動服飾。</p>
+                </div>
+                <div class="time-item">
+                    <h3>Bayside Place 博多</h3>
+                    <p>在海風與夜景中，享用新鮮海產，劃下完美句點。</p>
+                </div>
+            </div>
+        </div>
+        <img src="assets/3.png" class="character-img" alt="Venus">
+    </div>
+
+    <!-- Day 4: Chibi Moon & Pluto -->
+    <div id="day4" class="day-panel">
+        <div class="card">
+            <div class="card-header theme-moon">💖 第四天：穿越時空的回程</div>
+            <div class="card-body">
+                <div class="transport-tag">🚇 地鐵空港線</div>
+                <div class="time-item">
+                    <h3>福岡機場國際航廈</h3>
+                    <p>最後的衝刺！在免稅店將心儀的伴手禮全部帶回家。</p>
+                </div>
+            </div>
+        </div>
+        <img src="assets/4.png" class="character-img" alt="Chibimoon">
+    </div>
+
+</div>
+
+<nav>
+    <a href="javascript:void(0)" class="nav-item active" onclick="showDay(1, this)">
+        <div class="icon-circle">🌙</div>
+        <span>天神</span>
+    </a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(2, this)">
+        <div class="icon-circle">☿</div>
+        <span>博多</span>
+    </a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(3, this)">
+        <div class="icon-circle">♃</div>
+        <span>海濱</span>
+    </a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(4, this)">
+        <div class="icon-circle">💖</div>
+        <span>回程</span>
+    </a>
+</nav>
+
+<script>
+    function showDay(dayNum, element) {
+        document.querySelectorAll('.day-panel').forEach(panel => panel.classList.remove('active'));
+        document.getElementById('day' + dayNum).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+        
+        // 切換時讓頁面捲回頂部
+        document.querySelector('.main-content').scrollTop = 0;
+    }
+</script>
+
+</body>
+</html>
