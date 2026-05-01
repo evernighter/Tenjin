@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>福岡·月光冒險之旅</title>
     
+    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="福岡行程">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     
-    <link rel="manifest" href="manifest.json">
+    <!-- 修正路徑使用相對路徑 ./ 以符合 GitHub Pages 子目錄 -->
+    <link rel="manifest" href="./manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* 粉紫色系調色盤 */
             --main-purple: #4b0082;
             --soft-purple: #7b4397;
             --sailor-pink: #ff85a2;
             --moon-gold: #f9d423;
-            --crystal-bg: rgba(255, 182, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.3);
-            --text-glow: 0 0 10px rgba(255, 133, 162, 0.8);
+            --glass-white: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --text-glow: 0 0 12px rgba(255, 133, 162, 0.9);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
@@ -31,8 +32,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Noto Sans TC', sans-serif;
-            /* 背景改為粉紫漸層星空 */
             background: linear-gradient(135deg, #1a0a2e 0%, #4a1d64 50%, #2a0a2e 100%);
+            background-attachment: fixed;
             color: #fff;
             height: 100vh;
             overflow: hidden;
@@ -40,37 +41,38 @@
             flex-direction: column;
         }
 
-        /* 浮動的守護星背景裝飾 */
+        /* 浮動的背景符號 */
         .bg-symbols {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: -1;
             overflow: hidden;
-            opacity: 0.3;
+            opacity: 0.4;
         }
 
         .bg-symbol {
             position: absolute;
             color: var(--sailor-pink);
-            font-size: 2rem;
+            font-size: 1.8rem;
             animation: pulse 4s infinite ease-in-out;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.2); }
+            0%, 100% { opacity: 0.2; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.7; transform: scale(1.3) rotate(15deg); }
         }
 
+        /* 頂部標題 */
         header {
-            background: rgba(26, 10, 46, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(26, 10, 46, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             color: var(--moon-gold);
             padding: 55px 20px 15px;
             text-align: center;
             border-bottom: 2px solid var(--sailor-pink);
-            z-index: 10;
-            box-shadow: 0 4px 20px rgba(255, 133, 162, 0.3);
+            z-index: 100;
         }
 
         header h1 {
@@ -79,51 +81,54 @@
             font-weight: 700;
         }
 
+        /* 內容捲動區 */
         .main-content {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
             position: relative;
+            -webkit-overflow-scrolling: touch; /* iOS 捲動優化 */
         }
 
         .day-panel {
             display: none;
             position: relative;
             min-height: 100%;
+            padding-bottom: 150px; /* 預留空間給腳色圖 */
         }
 
         .day-panel.active {
             display: block;
-            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.5s ease-out;
         }
 
-        /* 角色圖像動畫優化 */
+        /* 角色圖片裝飾 */
         .character-img {
             position: fixed;
-            bottom: 90px;
+            bottom: 100px; /* 避開導航列 */
             right: -10px;
-            width: 200px;
+            width: 190px;
             z-index: 1;
-            opacity: 0.85;
+            opacity: 0.9;
             pointer-events: none;
             filter: drop-shadow(0 0 15px var(--soft-purple));
-            animation: float 5s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-10px, -20px) rotate(3deg); }
+            50% { transform: translate(-15px, -25px) rotate(5deg); }
         }
 
-        /* 卡片設計：粉紫玻璃擬態 */
+        /* 卡片設計 */
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            border: 1.5px solid var(--glass-border);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
             position: relative;
             z-index: 2;
         }
@@ -136,30 +141,29 @@
             display: flex;
             align-items: center;
             font-size: 1.1rem;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
             border-bottom: 1px solid var(--glass-border);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
-        /* 主題顏色優化（粉紫色系） */
+        /* 各天的主題色漸層 */
         .theme-moon { background: linear-gradient(90deg, #ff85a2, #7b4397); }
         .theme-mercury { background: linear-gradient(90deg, #4facfe, #7b4397); }
-        .theme-mars { background: linear-gradient(90deg, #ff4b2b, #7b4397); }
         .theme-jupiter { background: linear-gradient(90deg, #00b09b, #7b4397); }
+        .theme-chibi { background: linear-gradient(90deg, #ff9a9e, #7b4397); }
 
         .card-body { padding: 22px; }
 
+        /* 行程項目的守護星符號標記 */
         .time-item {
-            margin-bottom: 20px;
-            padding-left: 25px;
+            margin-bottom: 22px;
+            padding-left: 28px;
             position: relative;
         }
 
-        /* 使用守護星符號作為清單標記 */
         .time-item::before {
-            content: '✨';
+            content: '✨'; /* 這裡可以根據需要換成 🌙 ☿ ♀ ♂ ♃ */
             position: absolute;
-            left: 0;
-            top: 0;
+            left: 0; top: 2px;
             color: var(--moon-gold);
             font-size: 1rem;
             text-shadow: 0 0 8px var(--moon-gold);
@@ -172,32 +176,33 @@
         }
         
         .time-item p { 
-            margin: 6px 0 0; font-size: 0.95rem; 
-            line-height: 1.6; color: #eee; 
+            margin: 8px 0 0; font-size: 0.95rem; 
+            line-height: 1.6; color: #f0f0f0; 
         }
 
         .transport-tag {
-            background: rgba(255, 133, 162, 0.2);
-            padding: 4px 12px;
-            border-radius: 12px;
+            background: rgba(255, 133, 162, 0.25);
+            padding: 5px 14px;
+            border-radius: 15px;
             font-size: 0.8rem;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             display: inline-block;
             border: 1px solid var(--sailor-pink);
             color: var(--sailor-pink);
             font-weight: bold;
+            text-transform: uppercase;
         }
 
-        /* 底部導航欄：深紫色調 */
+        /* 底部導航欄 */
         nav {
-            background: rgba(26, 10, 46, 0.95);
-            height: 90px;
+            background: rgba(26, 10, 46, 0.96);
+            height: 95px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 2px solid var(--soft-purple);
+            border-top: 1.5px solid var(--soft-purple);
             padding-bottom: env(safe-area-inset-bottom);
-            z-index: 20;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -214,15 +219,12 @@
         .nav-item.active { color: var(--moon-gold); }
 
         .icon-circle {
-            width: 46px;
-            height: 46px;
+            width: 48px; height: 48px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 6px;
             background: rgba(255, 255, 255, 0.05);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid transparent;
         }
@@ -230,26 +232,27 @@
         .nav-item.active .icon-circle {
             background: var(--soft-purple);
             color: var(--moon-gold);
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 0 20px var(--soft-purple);
+            transform: scale(1.15) translateY(-8px);
+            box-shadow: 0 0 25px var(--soft-purple);
             border: 1px solid var(--moon-gold);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<!-- 背景漂浮符號 -->
+<!-- 背景漂浮守護星 -->
 <div class="bg-symbols">
-    <div class="bg-symbol" style="top:10%; left:10%;">🌙</div>
-    <div class="bg-symbol" style="top:30%; right:15%;">☿</div>
-    <div class="bg-symbol" style="top:60%; left:20%;">♀</div>
-    <div class="bg-symbol" style="top:80%; right:10%;">♂</div>
-    <div class="bg-symbol" style="top:45%; left:50%;">♃</div>
+    <div class="bg-symbol" style="top:15%; left:10%;">🌙</div>
+    <div class="bg-symbol" style="top:25%; right:15%;">☿</div>
+    <div class="bg-symbol" style="top:55%; left:25%;">♀</div>
+    <div class="bg-symbol" style="top:75%; right:12%;">♂</div>
+    <div class="bg-symbol" style="top:40%; left:55%;">♃</div>
+    <div class="bg-symbol" style="top:85%; left:45%;">♄</div>
 </div>
 
 <header>
@@ -258,80 +261,80 @@
 
 <div class="main-content">
     
-    <!-- Day 1: Sailor Moon -->
+    <!-- Day 1 -->
     <div id="day1" class="day-panel active">
         <div class="card">
-            <div class="card-header theme-moon">🌙 第一天：月亮力量與天神</div>
+            <div class="card-header theme-moon">🌙 Day 1: 月亮威力・天神商圈</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>機場午餐 & 天神地下街</h3>
-                    <p>抵達後前往天神 Check-in。逛地下街並直通 福岡PARCO，搜刮心愛的動漫角色周邊。</p>
+                    <p>機場先享用美食，搭地鐵至「天神站」飯店 Check-in。沿地下街直通 福岡PARCO，搜刮動漫周邊與人氣角色商品！</p>
                 </div>
                 <div class="time-item">
-                    <h3>天神三大百貨公司</h3>
-                    <p>岩田屋、三越、大丸。攻略化妝品與地下食品賣場，滿足購物慾！</p>
+                    <h3>天神三大百貨公司攻略</h3>
+                    <p>岩田屋本店、福岡三越、大丸福岡天神。尋找國際精品與化妝品，必逛地下食品賣場 (Depachika)。</p>
                 </div>
             </div>
         </div>
-        <img src="assets/1.png" class="character-img" alt="Moon">
+        <img src="assets/1.png" class="character-img" alt="Sailor Moon">
     </div>
 
-    <!-- Day 2: Mercury & Mars -->
+    <!-- Day 2 -->
     <div id="day2" class="day-panel">
         <div class="card">
-            <div class="card-header theme-mercury">☿ 第二天：水與火之星博多</div>
+            <div class="card-header theme-mercury">☿ Day 2: 水與火・博多鋼彈</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 JR / 地鐵七隈線</div>
                 <div class="time-item">
                     <h3>博多車站購物群</h3>
-                    <p>AMU PLAZA博多、博多阪急。午餐就在「博多麵街道」解決吧！</p>
+                    <p>抵達博多車站，開逛 AMU PLAZA 與博多阪急。午餐推薦 KITTE博多 或博多DEITOS 的「拉麵街道」。</p>
                 </div>
                 <div class="time-item">
                     <h3>三井LaLaport 福岡</h3>
-                    <p>前往竹下站朝聖巨型鋼彈。這是充滿戰鬥氣息的一站！</p>
+                    <p>搭 JR 到「竹下站」步行朝聖 1:1 巨型鋼彈。這是身為戰士必經的打卡點！</p>
                 </div>
                 <div class="time-item">
-                    <h3>博多運河城</h3>
-                    <p>噴泉匯演與精緻小物。像戰士一樣精準捕捉所有心儀商品。</p>
+                    <h3>博多運河城 Canal City</h3>
+                    <p>觀賞音樂噴泉匯演，搜集日系品牌精緻小物與特色周邊。</p>
                 </div>
             </div>
         </div>
-        <img src="assets/2.png" class="character-img" alt="Mercury">
+        <img src="assets/2.png" class="character-img" alt="Sailor Mercury">
     </div>
 
-    <!-- Day 3: Jupiter & Venus -->
+    <!-- Day 3 -->
     <div id="day3" class="day-panel">
         <div class="card">
-            <div class="card-header theme-jupiter">♃ 第三天：愛與雷鳴的海濱</div>
+            <div class="card-header theme-jupiter">♃ Day 3: 雷鳴與愛・河畔藝文</div>
             <div class="card-body">
-                <div class="transport-tag">🚇 地鐵 / 公車</div>
+                <div class="transport-tag">🚇 地鐵 / 西鐵公車</div>
                 <div class="time-item">
                     <h3>博多河岸購物中心</h3>
-                    <p>「中洲川端站」直結。享受藝文精品與優雅的咖啡時光。</p>
+                    <p>「中洲川端站」直結。探索質感生活選物與藝文精品，享受優雅的咖啡時光。</p>
                 </div>
                 <div class="time-item">
                     <h3>MARK IS 福岡MOMOCHI</h3>
-                    <p>福岡塔旁的巨型商場，適合探索科技與運動服飾。</p>
+                    <p>福岡塔旁的大型商場，適合選購戶外運動品牌與電腦硬體電子產品。</p>
                 </div>
                 <div class="time-item">
                     <h3>Bayside Place 博多</h3>
-                    <p>在海風與夜景中，享用新鮮海產，劃下完美句點。</p>
+                    <p>吹著海風看水族柱夜景，品嚐新鮮海產，劃下旅程完美的句點。</p>
                 </div>
             </div>
         </div>
-        <img src="assets/3.png" class="character-img" alt="Venus">
+        <img src="assets/3.png" class="character-img" alt="Sailor Venus">
     </div>
 
-    <!-- Day 4: Chibi Moon & Pluto -->
+    <!-- Day 4 -->
     <div id="day4" class="day-panel">
         <div class="card">
-            <div class="card-header theme-moon">💖 第四天：穿越時空的回程</div>
+            <div class="card-header theme-chibi">💖 Day 4: 未來之門・回程</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>福岡機場國際航廈</h3>
-                    <p>最後的衝刺！在免稅店將心儀的伴手禮全部帶回家。</p>
+                    <p>地鐵直達機場。過海關後，在免稅店進行最後衝刺，帶著戰利品像流星一樣閃耀回家！</p>
                 </div>
             </div>
         </div>
@@ -355,19 +358,46 @@
     </a>
     <a href="javascript:void(0)" class="nav-item" onclick="showDay(4, this)">
         <div class="icon-circle">💖</div>
-        <span>回程</span>
+        <span>返程</span>
     </a>
 </nav>
 
 <script>
+    // 註冊 Service Worker 並使用正確的相對路徑
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW Registered!', reg))
+                .catch(err => console.error('SW Registration Failed', err));
+        });
+    }
+
+    // 切換分頁邏輯
     function showDay(dayNum, element) {
-        document.querySelectorAll('.day-panel').forEach(panel => panel.classList.remove('active'));
-        document.getElementById('day' + dayNum).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
+        // 隱藏所有面板
+        document.querySelectorAll('.day-panel').forEach(panel => {
+            panel.classList.remove('active');
+        });
         
-        // 切換時讓頁面捲回頂部
+        // 顯示目標面板
+        const targetPanel = document.getElementById('day' + dayNum);
+        if (targetPanel) {
+            targetPanel.classList.add('active');
+        }
+
+        // 更新導航列狀態
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        element.classList.add('active');
+
+        // 頁面捲動回頂部
         document.querySelector('.main-content').scrollTop = 0;
+
+        // 輕微震動回饋 (iOS 支援)
+        if (window.navigator.vibrate) {
+            window.navigator.vibrate(15);
+        }
     }
 </script>
 
