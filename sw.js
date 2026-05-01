@@ -1,14 +1,14 @@
-const CACHE_NAME = 'sailor-fukuoka-v1';
+const CACHE_NAME = 'sailor-fukuoka-v2';
 const assets = [
-  './',
-  './index.html',
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;500;700&display=swap'
+  './',             // 改為相對路徑
+  './index.html',   // 改為相對路徑
+  'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap'
 ];
 
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      cache.addAll(assets);
+      return cache.addAll(assets);
     })
   );
 });
