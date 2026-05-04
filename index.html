@@ -114,12 +114,14 @@
         .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 150px; }
         .day-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
 
+        /* 角色圖片裝飾：修正至最上層 */
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
-            width: 170px; z-index: 1; opacity: 0.9;
+            width: 170px; z-index: 90; /* 提升層級，高於卡片(2) */
+            opacity: 0.95;
             filter: drop-shadow(0 0 15px var(--soft-purple));
             animation: float 6s ease-in-out infinite;
-            pointer-events: none;
+            pointer-events: none; /* 確保圖片不擋住點擊 */
         }
         @keyframes float {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -131,7 +133,7 @@
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 25px; margin-bottom: 20px;
             border: 1px solid var(--glass-border);
-            position: relative; z-index: 2;
+            position: relative; z-index: 2; /* 保持較低層級 */
         }
         .card-header {
             padding: 18px; color: #fff; font-weight: bold; border-radius: 24px 24px 0 0;
@@ -235,7 +237,7 @@
                 </div>
                 <div class="time-item">
                     <h3>下午：三井LaLaport 福岡</h3>
-                    <p>搭 JR 到<a href="https://www.google.com/maps/search/?api=1&query=竹下站" target="_blank" class="map-link">竹下站</a>，朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈 (LaLaport)</a>。</p>
+                    <p>從博多站搭 JR 到<a href="https://www.google.com/maps/search/?api=1&query=竹下站" target="_blank" class="map-link">竹下站</a>，朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈 (LaLaport)</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：博多運河城必去與晚餐</h3>
@@ -298,7 +300,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>福岡機場國際航廈</h3>
-                    <p>搭地鐵直達<a href="https://www.google.com/maps/search/?api=1&query=福岡機場站" target="_blank" class="map-link">福岡機場站</a>。在免稅店進行最後衝刺回家！</p>
+                    <p>搭地鐵直達<a href="https://www.google.com/maps/search/?api=1&query=福岡機場站" target="_blank" class="map-link">福岡機場站</a>。在免稅店進行最後採買後回國！</p>
                 </div>
             </div>
         </div>
