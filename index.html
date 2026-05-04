@@ -28,6 +28,7 @@
             --soft-purple: #7b4397;
             --sailor-pink: #ff85a2;
             --moon-gold: #f9d423;
+            --venus-orange: #f8ad4e;
             --glass-white: rgba(255, 255, 255, 0.12);
             --glass-border: rgba(255, 255, 255, 0.25);
             --text-glow: 0 0 12px rgba(255, 133, 162, 0.9);
@@ -60,6 +61,30 @@
             text-shadow: 0 0 8px var(--sailor-pink);
         }
 
+        /* 重要資訊清單樣式 */
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .info-list li {
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 12px;
+            padding: 15px;
+            border-radius: 15px;
+            border-left: 5px solid var(--moon-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-list a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: block;
+            width: 100%;
+        }
+
         /* 背景浮動守護星符號 */
         .bg-symbols {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -81,7 +106,7 @@
             text-align: center; border-bottom: 2px solid var(--sailor-pink);
             z-index: 100;
         }
-        header h1 { margin: 0; font-size: 1.3rem; letter-spacing: 5px; text-shadow: var(--text-glow); }
+        header h1 { margin: 0; font-size: 1.1rem; letter-spacing: 3px; text-shadow: var(--text-glow); }
 
         .main-content {
             flex: 1; overflow-y: auto; padding: 20px; position: relative;
@@ -93,7 +118,7 @@
 
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
-            width: 190px; z-index: 1; opacity: 0.9;
+            width: 170px; z-index: 1; opacity: 0.9;
             filter: drop-shadow(0 0 15px var(--soft-purple));
             animation: float 6s ease-in-out infinite;
             pointer-events: none;
@@ -118,6 +143,7 @@
         .theme-moon { background: linear-gradient(90deg, #ff85a2, #7b4397); }
         .theme-mercury { background: linear-gradient(90deg, #4facfe, #7b4397); }
         .theme-jupiter { background: linear-gradient(90deg, #00b09b, #7b4397); }
+        .theme-venus { background: linear-gradient(90deg, #f8ad4e, #7b4397); }
         .theme-chibi { background: linear-gradient(90deg, #ff9a9e, #7b4397); }
 
         .card-body { padding: 22px; }
@@ -136,6 +162,7 @@
             color: var(--sailor-pink); font-weight: bold;
         }
 
+        /* 導航欄修正為 5 個項目 */
         nav {
             background: rgba(26, 10, 46, 0.96); height: 95px;
             display: flex; justify-content: space-around; align-items: center;
@@ -143,15 +170,15 @@
             padding-bottom: env(safe-area-inset-bottom);
             z-index: 1000;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--soft-purple); text-decoration: none; font-size: 0.75rem; flex: 1; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--soft-purple); text-decoration: none; font-size: 0.65rem; flex: 1; }
         .nav-item.active { color: var(--moon-gold); }
         .icon-circle {
-            width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 6px; background: rgba(255, 255, 255, 0.05); font-size: 1.5rem; transition: 0.4s;
+            width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 4px; background: rgba(255, 255, 255, 0.05); font-size: 1.3rem; transition: 0.4s;
         }
         .nav-item.active .icon-circle {
-            background: var(--soft-purple); color: var(--moon-gold); transform: scale(1.15) translateY(-8px);
-            box-shadow: 0 0 25px var(--soft-purple); border: 1px solid var(--moon-gold);
+            background: var(--soft-purple); color: var(--moon-gold); transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 0 20px var(--soft-purple); border: 1px solid var(--moon-gold);
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -181,11 +208,11 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>中午：機場午餐 & 天神地下街 & PARCO</h3>
-                    <p>機場先吃午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>飯店 Check-in。逛<a href="https://www.google.com/maps/search/?api=1&query=天神地下街" target="_blank" class="map-link">天神地下街</a>直通 <a href="https://www.google.com/maps/search/?api=1&query=福岡PARCO" target="_blank" class="map-link">福岡PARCO</a>。</p>
+                    <p>機場先吃午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>。逛<a href="https://www.google.com/maps/search/?api=1&query=天神地下街" target="_blank" class="map-link">天神地下街</a>直通 <a href="https://www.google.com/maps/search/?api=1&query=福岡PARCO" target="_blank" class="map-link">福岡PARCO</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：天神三大百貨攻略</h3>
-                    <p>攻略<a href="https://www.google.com/maps/search/?api=1&query=岩田屋本店" target="_blank" class="map-link">岩田屋本店</a>、<a href="https://www.google.com/maps/search/?api=1&query=福岡三越" target="_blank" class="map-link">福岡三越</a>及<a href="https://www.google.com/maps/search/?api=1&query=大丸+福岡天神店" target="_blank" class="map-link">大丸 福岡天神店</a>。主攻精品與地下食品賣場。</p>
+                    <p>攻略<a href="https://www.google.com/maps/search/?api=1&query=岩田屋本店" target="_blank" class="map-link">岩田屋本店</a>、<a href="https://www.google.com/maps/search/?api=1&query=福岡三越" target="_blank" class="map-link">福岡三越</a>及<a href="https://www.google.com/maps/search/?api=1&query=大丸+福岡天神店" target="_blank" class="map-link">大丸 福岡天神店</a>。</p>
                 </div>
             </div>
         </div>
@@ -200,15 +227,15 @@
                 <div class="transport-tag">🚶 步行 / JR / 地鐵七隈線</div>
                 <div class="time-item">
                     <h3>早上 - 中午：博多車站核心圈</h3>
-                    <p>從<a href="https://www.google.com/maps/search/?api=1&query=博多站" target="_blank" class="map-link">博多車站</a>開逛，必去<a href="https://www.google.com/maps/search/?api=1&query=ドラッグストア+マツモトキヨシ+博多駅筑紫口店" target="_blank" class="map-link">松本清(博多站筑紫口店)</a>。逛<a href="https://www.google.com/maps/search/?api=1&query=AMU+PLAZA+HAKATA" target="_blank" class="map-link">AMU PLAZA博多</a>與<a href="https://www.google.com/maps/search/?api=1&query=博多阪急" target="_blank" class="map-link">博多阪急</a>。午餐：<a href="https://www.google.com/maps/search/?api=1&query=KITTE+HAKATA" target="_blank" class="map-link">KITTE博多</a>或<a href="https://www.google.com/maps/search/?api=1&query=博多麵街道" target="_blank" class="map-link">博多麵街道</a>。</p>
+                    <p>從博多車站開逛，必去<a href="https://www.google.com/maps/search/?api=1&query=ドラッグストア+マツモトキヨシ+博多駅筑紫口店" target="_blank" class="map-link">松本清(博多站筑紫口店)</a>。逛<a href="https://www.google.com/maps/search/?api=1&query=AMU+PLAZA+HAKATA" target="_blank" class="map-link">AMU PLAZA博多</a>與<a href="https://www.google.com/maps/search/?api=1&query=博多阪急" target="_blank" class="map-link">博多阪急</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>下午：三井LaLaport 福岡</h3>
-                    <p>從博多站搭 JR 到<a href="https://www.google.com/maps/search/?api=1&query=竹下站" target="_blank" class="map-link">竹下站</a>，朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈 (LaLaport)</a>。</p>
+                    <p>搭 JR 到<a href="https://www.google.com/maps/search/?api=1&query=竹下站" target="_blank" class="map-link">竹下站</a>，朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈 (LaLaport)</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：博多運河城</h3>
-                    <p>地鐵至<a href="https://www.google.com/maps/search/?api=1&query=櫛田神社前站" target="_blank" class="map-link">櫛田神社前站</a>。前往<a href="https://www.google.com/maps/search/?api=1&query=博多運河城" target="_blank" class="map-link">博多運河城 Canal City</a> 欣賞噴泉匯演。</p>
+                    <p>前往<a href="https://www.google.com/maps/search/?api=1&query=博多運河城" target="_blank" class="map-link">博多運河城 Canal City</a> 欣賞噴泉匯演。</p>
                 </div>
             </div>
         </div>
@@ -223,11 +250,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>早上：警固神社 & 警固公園</h3>
-                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜、買御守，並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">警固公園</a>散步，決定補貨區域。</p>
-                </div>
-                <div class="time-item">
-                    <h3>下午：商圈補貨行程</h3>
-                    <p>在 <a href="https://www.google.com/maps/search/?api=1&query=天神站" target="_blank" class="map-link">天神</a> 或 <a href="https://www.google.com/maps/search/?api=1&query=博多站" target="_blank" class="map-link">博多</a> 商圈針對前兩日決定要加強逛街的區域進行補貨。</p>
+                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">警固公園</a>散步。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：迴轉壽司ひょうたん</h3>
@@ -238,15 +261,32 @@
         <img src="assets/3.png" class="character-img" alt="Venus">
     </div>
 
+    <!-- 新欄位：地圖與資料 (Day 5 Logic) -->
+    <div id="day5" class="day-panel">
+        <div class="card">
+            <div class="card-header theme-venus">🧡 地圖導覽與交通資訊</div>
+            <div class="card-body">
+                <ul class="info-list">
+                    <li><a href="https://subway.city.fukuoka.lg.jp/cha_trad/route/deta/map.pdf" target="_blank">🚇 福岡地鐵路線 (PDF)</a></li>
+                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8&ll=33.588773644742076%2C130.40489182390886&z=16" target="_blank">🗺️ 天神逛街地圖 いち (Google)</a></li>
+                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank">🖼️ 天神逛街地圖 に (IG)</a></li>
+                    <li><a href="https://upd-api.funtime.com.tw/uploads/large__a1f3964883.png" target="_blank">🖼️ 天神逛街地圖 さん (FunTime)</a></li>
+                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg?resize=860%2C1217&ssl=1" target="_blank">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
+                </ul>
+            </div>
+        </div>
+        <img src="assets/5.png" class="character-img" alt="Venus">
+    </div>
+
     <!-- Day 4 -->
     <div id="day4" class="day-panel">
         <div class="card">
-            <div class="card-header theme-chibi">💖 Day 4: 未來之門・返航</div>
+            <div class="card-header theme-chibi">💖 Day 4: 返程衝刺</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>福岡機場國際航廈</h3>
-                    <p>搭地鐵直達<a href="https://www.google.com/maps/search/?api=1&query=福岡機場" target="_blank" class="map-link">福岡機場站</a>。過海關後，在<a href="https://www.google.com/maps/search/?api=1&query=福岡機場國際線免稅店" target="_blank" class="map-link">免稅店</a>進行最後衝刺！</p>
+                    <p>在免稅店進行最後衝刺，帶著戰利品閃耀回家！</p>
                 </div>
             </div>
         </div>
@@ -263,6 +303,9 @@
     </a>
     <a href="javascript:void(0)" class="nav-item" onclick="showDay(3, this)">
         <div class="icon-circle">♃</div><span>藝文</span>
+    </a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(5, this)">
+        <div class="icon-circle">♀</div><span>地圖</span>
     </a>
     <a href="javascript:void(0)" class="nav-item" onclick="showDay(4, this)">
         <div class="icon-circle">💖</div><span>返程</span>
