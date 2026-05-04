@@ -117,11 +117,11 @@
         /* 角色圖片裝飾：修正至最上層 */
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
-            width: 170px; z-index: 90; /* 提升層級，高於卡片(2) */
+            width: 170px; z-index: 90;
             opacity: 0.95;
             filter: drop-shadow(0 0 15px var(--soft-purple));
             animation: float 6s ease-in-out infinite;
-            pointer-events: none; /* 確保圖片不擋住點擊 */
+            pointer-events: none;
         }
         @keyframes float {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -133,7 +133,7 @@
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 25px; margin-bottom: 20px;
             border: 1px solid var(--glass-border);
-            position: relative; z-index: 2; /* 保持較低層級 */
+            position: relative; z-index: 2;
         }
         .card-header {
             padding: 18px; color: #fff; font-weight: bold; border-radius: 24px 24px 0 0;
@@ -232,8 +232,12 @@
             <div class="card-body">
                 <div class="transport-tag">🚶 步行 / JR / 地鐵七隈線</div>
                 <div class="time-item">
+                    <h3>早上 10:00：BAO BAO 排隊行程</h3>
+                    <p>早上先前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">BAO BAO ISSEY MIYAKE 岩田屋福岡店</a> 排隊購買包包。</p>
+                </div>
+                <div class="time-item">
                     <h3>早上 - 中午：博多車站核心圈</h3>
-                    <p>從<a href="https://www.google.com/maps/search/?api=1&query=博多站" target="_blank" class="map-link">博多車站</a>開逛，必去<a href="https://www.google.com/maps/search/?api=1&query=ドラッグストア+マツモトキヨシ+博多駅筑紫口店" target="_blank" class="map-link">松本清(博多站筑紫口店)</a>。逛<a href="https://www.google.com/maps/search/?api=1&query=AMU+PLAZA+HAKATA" target="_blank" class="map-link">AMU PLAZA博多</a>與<a href="https://www.google.com/maps/search/?api=1&query=博多阪急" target="_blank" class="map-link">博多阪急</a>。午餐：<a href="https://www.google.com/maps/search/?api=1&query=KITTE+HAKATA" target="_blank" class="map-link">KITTE博多</a>或<a href="https://www.google.com/maps/search/?api=1&query=博多麵街道" target="_blank" class="map-link">拉麵街道</a>。</p>
+                    <p>前往博多車站 <a href="https://www.google.com/maps/search/?api=1&query=アミュエスト+博多店" target="_blank" class="map-link">AMU EST (@cosme)</a> 購物，並去<a href="https://www.google.com/maps/search/?api=1&query=ドラッグストア+マツモトキヨシ+博多駅筑紫口店" target="_blank" class="map-link">松本清(博多站筑紫口店)</a>。逛 AMU PLAZA博多與博多阪急。午餐：<a href="https://www.google.com/maps/search/?api=1&query=KITTE+HAKATA" target="_blank" class="map-link">KITTE博多</a>或<a href="https://www.google.com/maps/search/?api=1&query=博多麵街道" target="_blank" class="map-link">拉麵街道</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>下午：三井LaLaport 福岡</h3>
