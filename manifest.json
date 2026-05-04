@@ -1,6 +1,6 @@
 {
   "name": "福岡月光冒險",
-  "short_name": "福岡行程",
+  "short_name": "Fukuoka",
   "start_url": "index.html",
   "scope": "./",
   "display": "standalone",
