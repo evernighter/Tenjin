@@ -86,7 +86,7 @@
             box-shadow: 0 0 20px rgba(255, 133, 162, 0.6);
             border: 2px solid var(--moon-gold);
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 2000; transform: translateY(250%); transition: transform 0.5s ease-in-out;
+            z-index: 2000; transform: translateY(250%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .update-toast.show { transform: translateY(0); }
         .update-toast button {
@@ -194,7 +194,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>中午：機場午餐 & 飯店 Check-in</h3>
-                    <p>機場午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>。</p>
+                    <p>機場先吃午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>。</p>
                     <div class="note-box">
                         📌 <strong>重要備註：</strong>天神站西6出口連通 <a href="https://www.google.com/maps/search/?api=1&query=SOLARIA+PLAZA" target="_blank" class="map-link">SOLARIA PLAZA</a>，Lobby位於 6F。
                     </div>
@@ -224,7 +224,7 @@
                 <div class="transport-tag">🚶 步行 / JR / 地鐵七隈線</div>
                 <div class="time-item">
                     <h3>早上 10:00：BAO BAO 排隊行程</h3>
-                    <p>先前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">BAO BAO ISSEY MIYAKE 岩田屋福岡店</a> 排隊。</p>
+                    <p>先前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">BAO BAO ISSEY MIYAKE 岩田屋福岡店</a> 排隊購買。</p>
                 </div>
                 <div class="time-item">
                     <h3>早上 - 中午：博多車站大攻略</h3>
@@ -241,10 +241,13 @@
                     <p>朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈</a>。</p>
                 </div>
                 <div class="time-item">
-                    <h3>晚上：博多運河城與晚餐</h3>
+                    <h3>晚上：博多運河城與回程超市</h3>
                     <p>必逛：<a href="https://www.google.com/maps/search/?api=1&query=ガシャポンバンダイオフィシャルショップ+キャナルシティ博多店" target="_blank" class="map-link">扭蛋百貨</a>、<a href="https://www.google.com/maps/search/?api=1&query=マツモトキヨシ+キャナルシティ博多店" target="_blank" class="map-link">松本清美妝店</a>。</p>
                     <p><strong>晚餐選項：</strong><br>
                     1. <a href="https://www.google.com/maps/search/?api=1&query=ラーメンスタジアム" target="_blank" class="map-link">拉麵競技場</a>、2. <a href="https://www.google.com/maps/search/?api=1&query=鰻のエイト" target="_blank" class="map-link">鰻魚Eito</a>、3. <a href="https://www.google.com/maps/search/?api=1&query=博多天ぷらたかお+キャナルシティ博多店" target="_blank" class="map-link">天婦羅 TAKAO</a></p>
+                    <div class="note-box">
+                        🛒 <strong>回程必買：</strong>位於 Solaria Stage B1 的 <a href="https://www.google.com/maps/search/?api=1&query=レガネットキュート+天神店" target="_blank" class="map-link">Reganet Cute 超市</a>，營業到 23:00，購買宵夜零食回飯店。
+                    </div>
                 </div>
             </div>
         </div>
@@ -259,7 +262,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>早上：警固神社 & 警固公園</h3>
-                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">公園</a>散步。</p>
+                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">公園</a>散步，購買御守。</p>
                 </div>
                 <div class="time-item">
                     <h3>下午：博多 & 天神再次復盤</h3>
@@ -284,11 +287,11 @@
             <div class="card-header theme-venus">🧡 地圖導覽與交通資訊</div>
             <div class="card-body">
                 <ul class="info-list">
-                    <li><a href="https://subway.city.fukuoka.lg.jp/cha_trad/route/deta/map.pdf" target="_blank">🚇 福岡地鐵路線 (PDF)</a></li>
-                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8" target="_blank">🗺️ 天神逛街地圖 いち (Google)</a></li>
-                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank">🖼️ 天神逛街地圖 に (Instagram)</a></li>
-                    <li><a href="https://upd-api.funtime.com.tw/uploads/large__a1f3964883.png" target="_blank">🖼️ 天神逛街地圖 さん (FunTime)</a></li>
-                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg" target="_blank">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
+                    <li><a href="https://subway.city.fukuoka.lg.jp/cha_trad/route/deta/map.pdf" target="_blank" style="padding:15px;display:block;">🚇 福岡地鐵路線 (PDF)</a></li>
+                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8" target="_blank" style="padding:15px;display:block;">🗺️ 天神逛街地圖 いち (Google)</a></li>
+                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank" style="padding:15px;display:block;">🖼️ 天神逛街地圖 に (Instagram)</a></li>
+                    <li><a href="https://upd-api.funtime.com.tw/uploads/large__a1f3964883.png" target="_blank" style="padding:15px;display:block;">🖼️ 天神逛街地圖 さん (FunTime)</a></li>
+                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg" target="_blank" style="padding:15px;display:block;">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
                 </ul>
             </div>
         </div>
