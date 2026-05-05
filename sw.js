@@ -1,5 +1,4 @@
-// 每次修改 index.html 後，請手動增加下方的版本號 (v6 -> v7...)
-const CACHE_NAME = 'sailor-fukuoka-v7';
+const CACHE_NAME = 'sailor-fukuoka-v8';
 const assets = [
   './',
   './index.html',
