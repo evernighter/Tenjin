@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <script>
-        // 解決 iOS PWA 網址末端 index.html 問題：強制跳轉到乾淨的目錄網址
+        // 1. 解決 iOS PWA 網址末端 index.html 問題：強制跳轉到乾淨的目錄網址
         if (window.location.pathname.endsWith('index.html')) {
             const cleanPath = window.location.pathname.replace('index.html', '');
             window.location.replace(cleanPath);
@@ -83,15 +83,15 @@
             position: fixed; bottom: 110px; left: 20px; right: 20px;
             background: linear-gradient(90deg, var(--sailor-pink), var(--soft-purple));
             color: white; padding: 15px 20px; border-radius: 20px;
-            box-shadow: 0 0 20px rgba(255, 133, 162, 0.6);
+            box-shadow: 0 0 30px rgba(255, 133, 162, 0.8);
             border: 2px solid var(--moon-gold);
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 2000; transform: translateY(250%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000; transform: translateY(250%); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .update-toast.show { transform: translateY(0); }
         .update-toast button {
             background: var(--moon-gold); color: var(--main-purple);
-            border: none; padding: 8px 15px; border-radius: 12px; font-weight: bold;
+            border: none; padding: 10px 18px; border-radius: 12px; font-weight: bold;
         }
 
         /* 背景符號 */
@@ -113,7 +113,7 @@
         .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 150px; }
         .day-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
 
-        /* 角色圖片裝飾：修正至最上層 */
+        /* 角色圖片裝飾：最上層 */
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
             width: 170px; z-index: 90; opacity: 0.95;
@@ -123,7 +123,7 @@
         }
         @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-15px, -25px) rotate(5deg); } }
 
-        /* 行程卡片 */
+        /* 卡片設計 */
         .card {
             background: var(--glass-white); backdrop-filter: blur(20px);
             border-radius: 25px; margin-bottom: 20px; border: 1px solid var(--glass-border);
@@ -242,7 +242,7 @@
                 </div>
                 <div class="time-item">
                     <h3>晚上：博多運河城與回程超市</h3>
-                    <p>必逛：<a href="https://www.google.com/maps/search/?api=1&query=ガシャポンバンダイオフィシャルショップ+キャanalシティ博多店" target="_blank" class="map-link">扭蛋百貨</a>、<a href="https://www.google.com/maps/search/?api=1&query=マツモトキヨシ+キャナルシティ博多店" target="_blank" class="map-link">松本清美妝店</a>。</p>
+                    <p>必逛：<a href="https://www.google.com/maps/search/?api=1&query=ガシャポンバンダイオフィシャルショップ+キャナルシティ博多店" target="_blank" class="map-link">扭蛋百貨</a>、<a href="https://www.google.com/maps/search/?api=1&query=マツモトキヨシ+キャナルシティ博多店" target="_blank" class="map-link">松本清美妝店</a>。</p>
                     <p><strong>晚餐選項：</strong><br>
                     1. <a href="https://www.google.com/maps/search/?api=1&query=ラーメンスタジアム" target="_blank" class="map-link">拉麵競技場</a>、2. <a href="https://www.google.com/maps/search/?api=1&query=鰻のエイト" target="_blank" class="map-link">鰻魚Eito</a>、3. <a href="https://www.google.com/maps/search/?api=1&query=博多天ぷらたかお+キャナルシティ博多店" target="_blank" class="map-link">天婦羅 TAKAO</a></p>
                     <div class="note-box">
@@ -262,8 +262,8 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>早上：警固神社與生活美學</h3>
-                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜購買御守，並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">警固公園</a>散步。</p>
-                    <p>隨後前往全九州最大的 <a href="https://www.google.com/maps/search/?api=1&query=無印良品+天神SHOPPERS福岡" target="_blank" class="map-link">無印良品 天神SHOPPERS福岡店</a> 體驗質感生活。</p>
+                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜購買御守，並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">公園</a>散步。</p>
+                    <p>隨後前往 <a href="https://www.google.com/maps/search/?api=1&query=無印良品+天神SHOPPERS福岡" target="_blank" class="map-link">無印良品 天神SHOPPERS福岡店</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>下午：博多 & 天神再次復盤</h3>
@@ -332,11 +332,28 @@
 <script>
     let newWorker;
     function refreshApp() { if (newWorker) newWorker.postMessage('skipWaiting'); }
-    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+    
+    // 監聽當新 Service Worker 激活時自動刷新頁面
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
+    });
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js').then(reg => {
+            // 在網址後加入隨機參數，防止瀏覽器快取 sw.js 檔案本身
+            const swUrl = `./sw.js?v=${Date.now()}`;
+            
+            navigator.serviceWorker.register(swUrl).then(reg => {
+                // 每當 App 被打開時，主動要求檢查伺服器是否有新檔案
+                reg.update();
+
+                // 1. 如果已經有新版在「等待中」，直接跳出提示
+                if (reg.waiting) {
+                    newWorker = reg.waiting;
+                    document.getElementById('update-toast').classList.add('show');
+                }
+
+                // 2. 監聽更新發現事件
                 reg.addEventListener('updatefound', () => {
                     newWorker = reg.installing;
                     newWorker.addEventListener('statechange', () => {
@@ -346,6 +363,13 @@
                     });
                 });
             });
+        });
+
+        // 當使用者「切換回 App」時，再次觸發檢查
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                navigator.serviceWorker.ready.then(reg => reg.update());
+            }
         });
     }
 
