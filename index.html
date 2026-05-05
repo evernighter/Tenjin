@@ -48,6 +48,7 @@
             flex-direction: column;
         }
 
+        /* 景點連結樣式 */
         a.map-link {
             color: var(--moon-gold);
             text-decoration: none;
@@ -60,85 +61,77 @@
             text-shadow: 0 0 8px var(--sailor-pink);
         }
 
-        .info-list {
-            list-style: none; padding: 0; margin: 0;
-        }
+        /* 重要資訊清單樣式 */
+        .info-list { list-style: none; padding: 0; margin: 0; }
         .info-list li {
             background: rgba(255, 255, 255, 0.1);
             margin-bottom: 12px; padding: 15px;
             border-radius: 15px; border-left: 5px solid var(--moon-gold);
-            display: flex; justify-content: space-between; align-items: center;
         }
-        .info-list a {
-            color: white; text-decoration: none; font-size: 0.95rem;
-            display: block; width: 100%;
-        }
+        .info-list a { color: white; text-decoration: none; font-size: 0.95rem; display: block; width: 100%; }
 
+        /* 備註框 */
         .note-box {
             background: rgba(255, 133, 162, 0.15);
             border: 1px dashed var(--sailor-pink);
-            padding: 10px;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-size: 0.85rem;
-            color: #ffdae3;
+            padding: 12px; border-radius: 12px; margin: 10px 0;
+            font-size: 0.85rem; color: #ffdae3; line-height: 1.4;
         }
 
+        /* 更新提示框 */
+        .update-toast {
+            position: fixed; bottom: 110px; left: 20px; right: 20px;
+            background: linear-gradient(90deg, var(--sailor-pink), var(--soft-purple));
+            color: white; padding: 15px 20px; border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 133, 162, 0.6);
+            border: 2px solid var(--moon-gold);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 2000; transform: translateY(250%); transition: transform 0.5s ease-in-out;
+        }
+        .update-toast.show { transform: translateY(0); }
+        .update-toast button {
+            background: var(--moon-gold); color: var(--main-purple);
+            border: none; padding: 8px 15px; border-radius: 12px; font-weight: bold;
+        }
+
+        /* 背景符號 */
         .bg-symbols {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: -1; opacity: 0.4;
         }
-        .bg-symbol {
-            position: absolute; color: var(--sailor-pink); font-size: 1.8rem;
-            animation: pulse 4s infinite ease-in-out;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.2; transform: scale(1) rotate(0deg); }
-            50% { opacity: 0.7; transform: scale(1.3) rotate(15deg); }
-        }
+        .bg-symbol { position: absolute; color: var(--sailor-pink); font-size: 1.8rem; animation: pulse 4s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.3); } }
 
         header {
-            background: rgba(26, 10, 46, 0.85);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(26, 10, 46, 0.85); backdrop-filter: blur(15px);
             color: var(--moon-gold); padding: 55px 20px 15px;
-            text-align: center; border-bottom: 2px solid var(--sailor-pink);
-            z-index: 100;
+            text-align: center; border-bottom: 2px solid var(--sailor-pink); z-index: 100;
         }
         header h1 { margin: 0; font-size: 1.1rem; letter-spacing: 3px; text-shadow: var(--text-glow); }
 
-        .main-content {
-            flex: 1; overflow-y: auto; padding: 20px; position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-
+        .main-content { flex: 1; overflow-y: auto; padding: 20px; position: relative; -webkit-overflow-scrolling: touch; }
         .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 150px; }
         .day-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
 
         /* 角色圖片裝飾：修正至最上層 */
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
-            width: 170px; z-index: 90;
-            opacity: 0.95;
+            width: 170px; z-index: 90; opacity: 0.95;
             filter: drop-shadow(0 0 15px var(--soft-purple));
             animation: float 6s ease-in-out infinite;
             pointer-events: none;
         }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-15px, -25px) rotate(5deg); }
-        }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-15px, -25px) rotate(5deg); } }
 
+        /* 行程卡片 */
         .card {
-            background: var(--glass-white);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 25px; margin-bottom: 20px;
-            border: 1px solid var(--glass-border);
+            background: var(--glass-white); backdrop-filter: blur(20px);
+            border-radius: 25px; margin-bottom: 20px; border: 1px solid var(--glass-border);
             position: relative; z-index: 2;
         }
         .card-header {
             padding: 18px; color: #fff; font-weight: bold; border-radius: 24px 24px 0 0;
-            display: flex; align-items: center; font-size: 1.1rem;
-            border-bottom: 1px solid var(--glass-border);
+            display: flex; align-items: center; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border);
         }
         .theme-moon { background: linear-gradient(90deg, #ff85a2, #7b4397); }
         .theme-mercury { background: linear-gradient(90deg, #4facfe, #7b4397); }
@@ -148,26 +141,22 @@
 
         .card-body { padding: 22px; }
         .time-item { margin-bottom: 22px; padding-left: 28px; position: relative; }
-        .time-item::before {
-            content: '✨'; position: absolute; left: 0; top: 2px;
-            color: var(--moon-gold); font-size: 1rem;
-        }
+        .time-item::before { content: '✨'; position: absolute; left: 0; top: 2px; color: var(--moon-gold); font-size: 1rem; }
         .time-item h3 { margin: 0; font-size: 1.1rem; color: var(--moon-gold); }
         .time-item p { margin: 8px 0 0; font-size: 0.95rem; line-height: 1.6; color: #f0f0f0; }
 
         .transport-tag {
-            background: rgba(255, 133, 162, 0.25); padding: 5px 14px;
-            border-radius: 12px; font-size: 0.8rem; margin-bottom: 15px;
-            display: inline-block; border: 1px solid var(--sailor-pink);
-            color: var(--sailor-pink); font-weight: bold;
+            background: rgba(255, 133, 162, 0.25); padding: 5px 14px; border-radius: 12px;
+            font-size: 0.8rem; margin-bottom: 15px; display: inline-block;
+            border: 1px solid var(--sailor-pink); color: var(--sailor-pink); font-weight: bold;
         }
 
+        /* 導航列 */
         nav {
             background: rgba(26, 10, 46, 0.96); height: 95px;
             display: flex; justify-content: space-around; align-items: center;
             border-top: 1.5px solid var(--soft-purple);
-            padding-bottom: env(safe-area-inset-bottom);
-            z-index: 1000;
+            padding-bottom: env(safe-area-inset-bottom); z-index: 1000;
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--soft-purple); text-decoration: none; font-size: 0.65rem; flex: 1; }
         .nav-item.active { color: var(--moon-gold); }
@@ -189,9 +178,7 @@
     <div class="bg-symbol" style="top:10%; left:10%;">🌙</div>
     <div class="bg-symbol" style="top:25%; right:15%;">☿</div>
     <div class="bg-symbol" style="top:55%; left:25%;">♀</div>
-    <div class="bg-symbol" style="top:75%; right:12%;">♂</div>
     <div class="bg-symbol" style="top:40%; left:55%;">♃</div>
-    <div class="bg-symbol" style="top:85%; left:45%;">♄</div>
 </div>
 
 <header>
@@ -207,7 +194,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>中午：機場午餐 & 飯店 Check-in</h3>
-                    <p>機場先吃午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>。</p>
+                    <p>機場午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>。</p>
                     <div class="note-box">
                         📌 <strong>重要備註：</strong>天神站西6出口連通 <a href="https://www.google.com/maps/search/?api=1&query=SOLARIA+PLAZA" target="_blank" class="map-link">SOLARIA PLAZA</a>，Lobby位於 6F。
                     </div>
@@ -237,13 +224,13 @@
                 <div class="transport-tag">🚶 步行 / JR / 地鐵七隈線</div>
                 <div class="time-item">
                     <h3>早上 10:00：BAO BAO 排隊行程</h3>
-                    <p>先前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">BAO BAO ISSEY MIYAKE 岩田屋福岡店</a> 排隊購買。</p>
+                    <p>先前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">BAO BAO ISSEY MIYAKE 岩田屋福岡店</a> 排隊。</p>
                 </div>
                 <div class="time-item">
                     <h3>早上 - 中午：博多車站大攻略</h3>
                     <p>
                         • 服飾購物：<a href="https://www.google.com/maps/search/?api=1&query=アミュエスト" target="_blank" class="map-link">AMU EST</a> (含 <a href="https://www.google.com/maps/search/?api=1&query=＠ｃｏｓｍｅ＋ｓｔｏｒｅ＋アミュエスト博多店" target="_blank" class="map-link">@cosme store</a>)<br>
-                        • 雜貨選物：<a href="https://www.google.com/maps/search/?api=1&query=ハンズ+博多店" target="_blank" class="map-link">Hands (Tokyu Hands) 博多店</a><br>
+                        • 雜貨選物：<a href="https://www.google.com/maps/search/?api=1&query=ハンズ+博多店" target="_blank" class="map-link">Hands 博多店</a><br>
                         • 伴手禮天堂：<a href="https://www.google.com/maps/search/?api=1&query=マイング" target="_blank" class="map-link">マイング (Maing)</a><br>
                         • 藥妝：<a href="https://www.google.com/maps/search/?api=1&query=ドラッグストア+マツモトキヨシ+博多駅筑紫口店" target="_blank" class="map-link">松本清 (筑紫口店)</a>
                     </p>
@@ -251,15 +238,13 @@
                 </div>
                 <div class="time-item">
                     <h3>下午：三井LaLaport 福岡</h3>
-                    <p>搭 JR 到<a href="https://www.google.com/maps/search/?api=1&query=竹下站" target="_blank" class="map-link">竹下站</a>，朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈</a>。</p>
+                    <p>朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：博多運河城與晚餐</h3>
                     <p>必逛：<a href="https://www.google.com/maps/search/?api=1&query=ガシャポンバンダイオフィシャルショップ+キャナルシティ博多店" target="_blank" class="map-link">扭蛋百貨</a>、<a href="https://www.google.com/maps/search/?api=1&query=マツモトキヨシ+キャナルシティ博多店" target="_blank" class="map-link">松本清美妝店</a>。</p>
                     <p><strong>晚餐選項：</strong><br>
-                    1. <a href="https://www.google.com/maps/search/?api=1&query=ラーメンスタジアム" target="_blank" class="map-link">拉麵競技場</a><br>
-                    2. <a href="https://www.google.com/maps/search/?api=1&query=鰻のエイト" target="_blank" class="map-link">鰻魚Eito</a><br>
-                    3. <a href="https://www.google.com/maps/search/?api=1&query=博多天ぷらたかお+キャナルシティ博多店" target="_blank" class="map-link">博多天婦羅 TAKAO</a></p>
+                    1. <a href="https://www.google.com/maps/search/?api=1&query=ラーメンスタジアム" target="_blank" class="map-link">拉麵競技場</a>、2. <a href="https://www.google.com/maps/search/?api=1&query=鰻のエイト" target="_blank" class="map-link">鰻魚Eito</a>、3. <a href="https://www.google.com/maps/search/?api=1&query=博多天ぷらたかお+キャナルシティ博多店" target="_blank" class="map-link">天婦羅 TAKAO</a></p>
                 </div>
             </div>
         </div>
@@ -274,15 +259,15 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>早上：警固神社 & 警固公園</h3>
-                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜，並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">警固公園</a>散步，購買御守。</p>
+                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">公園</a>散步。</p>
                 </div>
                 <div class="time-item">
                     <h3>下午：博多 & 天神再次復盤</h3>
-                    <p>回到商圈針對想加強衝刺的店鋪進行深度復盤與最後採買。</p>
+                    <p>回到商圈針對想加強衝刺的店鋪進行最後採買。</p>
                 </div>
                 <div class="time-item">
                     <h3>傍晚：博多頂樓夜景</h3>
-                    <p>前往 <a href="https://www.google.com/maps/search/?api=1&query=つばめの杜ひろば+鉄道神社" target="_blank" class="map-link">AMU PLAZA博多頂樓 (燕子之林廣場)</a>。參拜鐵道神社、搭乘燕子號小火車，並在展望台觀賞博多市區夜景。</p>
+                    <p>前往 <a href="https://www.google.com/maps/search/?api=1&query=つばめの杜ひろば+鉄道神社" target="_blank" class="map-link">AMU PLAZA博多頂樓</a>。參拜鐵道神社、搭乘小火車看夜景。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：迴轉壽司ひょうたん</h3>
@@ -293,17 +278,17 @@
         <img src="assets/3.png" class="character-img" alt="Venus">
     </div>
 
-    <!-- 地圖與資料欄位 -->
+    <!-- 地圖分頁 -->
     <div id="day5" class="day-panel">
         <div class="card">
             <div class="card-header theme-venus">🧡 地圖導覽與交通資訊</div>
             <div class="card-body">
                 <ul class="info-list">
                     <li><a href="https://subway.city.fukuoka.lg.jp/cha_trad/route/deta/map.pdf" target="_blank">🚇 福岡地鐵路線 (PDF)</a></li>
-                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8&ll=33.588773644742076%2C130.40489182390886&z=16" target="_blank">🗺️ 天神逛街地圖 いち (Google)</a></li>
-                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank">🖼️ 天神逛街地圖 に (IG)</a></li>
+                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8" target="_blank">🗺️ 天神逛街地圖 いち (Google)</a></li>
+                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank">🖼️ 天神逛街地圖 に (Instagram)</a></li>
                     <li><a href="https://upd-api.funtime.com.tw/uploads/large__a1f3964883.png" target="_blank">🖼️ 天神逛街地圖 さん (FunTime)</a></li>
-                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg?resize=860%2C1217&ssl=1" target="_blank">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
+                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg" target="_blank">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
                 </ul>
             </div>
         </div>
@@ -318,7 +303,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>福岡機場國際航廈</h3>
-                    <p>搭地鐵直達<a href="https://www.google.com/maps/search/?api=1&query=福岡機場站" target="_blank" class="map-link">福岡機場站</a>。在免稅店進行最後採買後回國！</p>
+                    <p>搭地鐵直達機場，在免稅店進行最後採買回國！</p>
                 </div>
             </div>
         </div>
@@ -326,41 +311,47 @@
     </div>
 </div>
 
+<!-- 更新提示 UI -->
+<div id="update-toast" class="update-toast">
+    <span>✨ 月亮力量！發現新行程資訊</span>
+    <button onclick="refreshApp()">立即更新</button>
+</div>
+
 <nav>
-    <a href="javascript:void(0)" class="nav-item active" onclick="showDay(1, this)">
-        <div class="icon-circle">🌙</div><span>天神</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(2, this)">
-        <div class="icon-circle">☿</div><span>博多</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(3, this)">
-        <div class="icon-circle">♃</div><span>藝文</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(5, this)">
-        <div class="icon-circle">♀</div><span>地圖</span>
-    </a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showDay(4, this)">
-        <div class="icon-circle">💖</div><span>返程</span>
-    </a>
+    <a href="javascript:void(0)" class="nav-item active" onclick="showDay(1, this)"><div class="icon-circle">🌙</div><span>天神</span></a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(2, this)"><div class="icon-circle">☿</div><span>博多</span></a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(3, this)"><div class="icon-circle">♃</div><span>藝文</span></a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(5, this)"><div class="icon-circle">♀</div><span>地圖</span></a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showDay(4, this)"><div class="icon-circle">💖</div><span>返程</span></a>
 </nav>
 
 <script>
+    let newWorker;
+    function refreshApp() { if (newWorker) newWorker.postMessage('skipWaiting'); }
+    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js');
+            navigator.serviceWorker.register('./sw.js').then(reg => {
+                reg.addEventListener('updatefound', () => {
+                    newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            document.getElementById('update-toast').classList.add('show');
+                        }
+                    });
+                });
+            });
         });
     }
 
     function showDay(dayNum, element) {
         document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
-        const target = document.getElementById('day' + dayNum);
-        if (target) target.classList.add('active');
-        
+        document.getElementById('day' + dayNum).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         element.classList.add('active');
         document.querySelector('.main-content').scrollTop = 0;
     }
 </script>
-
 </body>
 </html>
