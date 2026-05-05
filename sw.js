@@ -1,4 +1,5 @@
-const CACHE_NAME = 'sailor-fukuoka-v4';
+// 每次修改 index.html 後，請手動增加下方的版本號 (v6 -> v7...)
+const CACHE_NAME = 'sailor-fukuoka-v6';
 const assets = [
   './',
   './index.html',
@@ -10,6 +11,24 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(assets))
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+      );
+    })
+  );
+  return self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
