@@ -113,7 +113,7 @@
         .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 150px; }
         .day-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
 
-        /* 角色圖片裝飾：最上層 */
+        /* 角色圖片裝飾：修正至最上層 */
         .character-img {
             position: fixed; bottom: 100px; right: -10px;
             width: 170px; z-index: 90; opacity: 0.95;
@@ -200,9 +200,10 @@
                     </div>
                 </div>
                 <div class="time-item">
-                    <h3>下午：寵物用品與天神地下街</h3>
+                    <h3>下午：寵物用品、動漫周邊與天神地下街</h3>
                     <p>在 SOLARIA PLAZA 內逛 <a href="https://www.google.com/maps/search/?api=1&query=P2+ソラリアプラザ店" target="_blank" class="map-link">P2 Solaria Plaza店</a>。</p>
-                    <p>隨後逛<a href="https://www.google.com/maps/search/?api=1&query=天神地下街" target="_blank" class="map-link">天神地下街</a>，造訪 <a href="https://www.google.com/maps/search/?api=1&query=ペットパラダイス+天神地下街店" target="_blank" class="map-link">Pet Paradise</a>，並直通 <a href="https://www.google.com/maps/search/?api=1&query=福岡PARCO" target="_blank" class="map-link">福岡PARCO</a>。</p>
+                    <p>隨後逛<a href="https://www.google.com/maps/search/?api=1&query=天神地下街" target="_blank" class="map-link">天神地下街</a>，造訪寵物店 <a href="https://www.google.com/maps/search/?api=1&query=ペットパラダイス+天神地下街店" target="_blank" class="map-link">Pet Paradise</a>，並直通 <a href="https://www.google.com/maps/search/?api=1&query=福岡PARCO" target="_blank" class="map-link">福岡PARCO</a>。</p>
+                    <p><strong>戰士必逛：</strong><a href="https://www.google.com/maps/search/?api=1&query=アニメイト福岡天神ビブレ" target="_blank" class="map-link">ANIMATE アニメイト福岡天神</a> 購買美少女戰士周邊。</p>
                 </div>
                 <div class="time-item">
                     <h3>晚上：天神百貨攻略與晚餐</h3>
@@ -261,7 +262,7 @@
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
-                    <h3>早上：警固神社與生活美學</h3>
+                    <h3>早上：警顧問神社與生活美學</h3>
                     <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜購買御守，並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">公園</a>散步。</p>
                     <p>隨後前往 <a href="https://www.google.com/maps/search/?api=1&query=無印良品+天神SHOPPERS福岡" target="_blank" class="map-link">無印良品 天神SHOPPERS福岡店</a>。</p>
                 </div>
@@ -307,7 +308,7 @@
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
                     <h3>福岡機場國際航廈</h3>
-                    <p>搭地鐵直達機場，在免稅店進行最後採買回國！</p>
+                    <p>搭地鐵直達機場，在免稅店進行最後採買後回國！</p>
                 </div>
             </div>
         </div>
@@ -340,20 +341,13 @@
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            // 在網址後加入隨機參數，防止瀏覽器快取 sw.js 檔案本身
             const swUrl = `./sw.js?v=${Date.now()}`;
-            
             navigator.serviceWorker.register(swUrl).then(reg => {
-                // 每當 App 被打開時，主動要求檢查伺服器是否有新檔案
                 reg.update();
-
-                // 1. 如果已經有新版在「等待中」，直接跳出提示
                 if (reg.waiting) {
                     newWorker = reg.waiting;
                     document.getElementById('update-toast').classList.add('show');
                 }
-
-                // 2. 監聽更新發現事件
                 reg.addEventListener('updatefound', () => {
                     newWorker = reg.installing;
                     newWorker.addEventListener('statechange', () => {
@@ -365,7 +359,6 @@
             });
         });
 
-        // 當使用者「切換回 App」時，再次觸發檢查
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
                 navigator.serviceWorker.ready.then(reg => reg.update());
