@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sailor-fukuoka-v16';
+const CACHE_NAME = 'sailor-fukuoka-FINAL';
 const assets = [
   './',
   './index.html',
