@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <script>
-        // 1. 解決 iOS PWA 網址末端 index.html 問題：強制跳轉到乾淨的目錄網址
+        // 1. 強制去除網址末端的 index.html 確保 PWA 識別一致
         if (window.location.pathname.endsWith('index.html')) {
             const cleanPath = window.location.pathname.replace('index.html', '');
             window.location.replace(cleanPath);
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Fukuoka</title>
     
-    <!-- iOS PWA 必備設定 -->
+    <!-- iOS PWA 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Fukuoka">
@@ -28,7 +28,6 @@
             --soft-purple: #7b4397;
             --sailor-pink: #ff85a2;
             --moon-gold: #f9d423;
-            --venus-orange: #f8ad4e;
             --glass-white: rgba(255, 255, 255, 0.12);
             --glass-border: rgba(255, 255, 255, 0.25);
             --text-glow: 0 0 12px rgba(255, 133, 162, 0.9);
@@ -41,44 +40,26 @@
             font-family: 'Noto Sans TC', sans-serif;
             background: linear-gradient(135deg, #1a0a2e 0%, #4a1d64 50%, #2a0a2e 100%);
             background-attachment: fixed;
-            color: #fff;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            color: #fff; height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
-        /* 景點連結樣式 */
+        /* 景點連結 */
         a.map-link {
-            color: var(--moon-gold);
-            text-decoration: none;
-            border-bottom: 1px dashed var(--moon-gold);
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        a.map-link:active {
-            color: var(--sailor-pink);
-            text-shadow: 0 0 8px var(--sailor-pink);
+            color: var(--moon-gold); text-decoration: none;
+            border-bottom: 1px dashed var(--moon-gold); font-weight: bold;
         }
 
-        /* 重要資訊清單樣式 */
-        .info-list { list-style: none; padding: 0; margin: 0; }
-        .info-list li {
-            background: rgba(255, 255, 255, 0.1);
-            margin-bottom: 12px; padding: 15px;
-            border-radius: 15px; border-left: 5px solid var(--moon-gold);
-        }
-        .info-list a { color: white; text-decoration: none; font-size: 0.95rem; display: block; width: 100%; }
-
-        /* 備註框 */
+        /* 備註與清單 */
         .note-box {
-            background: rgba(255, 133, 162, 0.15);
-            border: 1px dashed var(--sailor-pink);
-            padding: 12px; border-radius: 12px; margin: 10px 0;
-            font-size: 0.85rem; color: #ffdae3; line-height: 1.4;
+            background: rgba(255, 133, 162, 0.15); border: 1px dashed var(--sailor-pink);
+            padding: 12px; border-radius: 12px; margin: 10px 0; font-size: 0.85rem; color: #ffdae3;
         }
+        .info-list { list-style: none; padding: 0; margin: 0; }
+        .info-list li { background: rgba(255, 255, 255, 0.1); margin-bottom: 12px; border-radius: 15px; border-left: 5px solid var(--moon-gold); }
+        .info-list a { color: white; text-decoration: none; font-size: 0.95rem; display: block; padding: 15px; width: 100%; }
 
-        /* 更新提示框 */
+        /* 更新提示框 - 修正層級與動效 */
         .update-toast {
             position: fixed; bottom: 110px; left: 20px; right: 20px;
             background: linear-gradient(90deg, var(--sailor-pink), var(--soft-purple));
@@ -94,45 +75,27 @@
             border: none; padding: 10px 18px; border-radius: 12px; font-weight: bold;
         }
 
-        /* 背景符號 */
-        .bg-symbols {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1; opacity: 0.4;
-        }
+        /* 背景與標題 */
+        .bg-symbols { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: 0.4; }
         .bg-symbol { position: absolute; color: var(--sailor-pink); font-size: 1.8rem; animation: pulse 4s infinite ease-in-out; }
         @keyframes pulse { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.3); } }
-
-        header {
-            background: rgba(26, 10, 46, 0.85); backdrop-filter: blur(15px);
-            color: var(--moon-gold); padding: 55px 20px 15px;
-            text-align: center; border-bottom: 2px solid var(--sailor-pink); z-index: 100;
-        }
+        header { background: rgba(26, 10, 46, 0.85); backdrop-filter: blur(15px); color: var(--moon-gold); padding: 55px 20px 15px; text-align: center; border-bottom: 2px solid var(--sailor-pink); z-index: 100; }
         header h1 { margin: 0; font-size: 1.1rem; letter-spacing: 3px; text-shadow: var(--text-glow); }
 
         .main-content { flex: 1; overflow-y: auto; padding: 20px; position: relative; -webkit-overflow-scrolling: touch; }
         .day-panel { display: none; position: relative; min-height: 100%; padding-bottom: 150px; }
         .day-panel.active { display: block; animation: fadeIn 0.5s ease-out; }
 
-        /* 角色圖片裝飾：修正至最上層 */
+        /* 角色圖置頂：z-index 90 */
         .character-img {
-            position: fixed; bottom: 100px; right: -10px;
-            width: 170px; z-index: 90; opacity: 0.95;
-            filter: drop-shadow(0 0 15px var(--soft-purple));
-            animation: float 6s ease-in-out infinite;
-            pointer-events: none;
+            position: fixed; bottom: 100px; right: -10px; width: 170px;
+            z-index: 90; opacity: 0.95; filter: drop-shadow(0 0 15px var(--soft-purple));
+            animation: float 6s ease-in-out infinite; pointer-events: none;
         }
-        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-15px, -25px) rotate(5deg); } }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-10px, -20px) rotate(5deg); } }
 
-        /* 卡片設計 */
-        .card {
-            background: var(--glass-white); backdrop-filter: blur(20px);
-            border-radius: 25px; margin-bottom: 20px; border: 1px solid var(--glass-border);
-            position: relative; z-index: 2;
-        }
-        .card-header {
-            padding: 18px; color: #fff; font-weight: bold; border-radius: 24px 24px 0 0;
-            display: flex; align-items: center; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border);
-        }
+        .card { background: var(--glass-white); backdrop-filter: blur(20px); border-radius: 25px; margin-bottom: 20px; border: 1px solid var(--glass-border); position: relative; z-index: 2; }
+        .card-header { padding: 18px; color: #fff; font-weight: bold; border-radius: 24px 24px 0 0; display: flex; align-items: center; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); }
         .theme-moon { background: linear-gradient(90deg, #ff85a2, #7b4397); }
         .theme-mercury { background: linear-gradient(90deg, #4facfe, #7b4397); }
         .theme-jupiter { background: linear-gradient(90deg, #00b09b, #7b4397); }
@@ -145,29 +108,13 @@
         .time-item h3 { margin: 0; font-size: 1.1rem; color: var(--moon-gold); }
         .time-item p { margin: 8px 0 0; font-size: 0.95rem; line-height: 1.6; color: #f0f0f0; }
 
-        .transport-tag {
-            background: rgba(255, 133, 162, 0.25); padding: 5px 14px; border-radius: 12px;
-            font-size: 0.8rem; margin-bottom: 15px; display: inline-block;
-            border: 1px solid var(--sailor-pink); color: var(--sailor-pink); font-weight: bold;
-        }
+        .transport-tag { background: rgba(255, 133, 162, 0.25); padding: 5px 14px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 15px; display: inline-block; border: 1px solid var(--sailor-pink); color: var(--sailor-pink); font-weight: bold; }
 
-        /* 導航列 */
-        nav {
-            background: rgba(26, 10, 46, 0.96); height: 95px;
-            display: flex; justify-content: space-around; align-items: center;
-            border-top: 1.5px solid var(--soft-purple);
-            padding-bottom: env(safe-area-inset-bottom); z-index: 1000;
-        }
+        nav { background: rgba(26, 10, 46, 0.96); height: 95px; display: flex; justify-content: space-around; align-items: center; border-top: 1.5px solid var(--soft-purple); padding-bottom: env(safe-area-inset-bottom); z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--soft-purple); text-decoration: none; font-size: 0.65rem; flex: 1; }
         .nav-item.active { color: var(--moon-gold); }
-        .icon-circle {
-            width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 4px; background: rgba(255, 255, 255, 0.05); font-size: 1.3rem; transition: 0.4s;
-        }
-        .nav-item.active .icon-circle {
-            background: var(--soft-purple); color: var(--moon-gold); transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 0 20px var(--soft-purple); border: 1px solid var(--moon-gold);
-        }
+        .icon-circle { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; background: rgba(255, 255, 255, 0.05); font-size: 1.3rem; transition: 0.4s; }
+        .nav-item.active .icon-circle { background: var(--soft-purple); color: var(--moon-gold); transform: scale(1.1) translateY(-5px); box-shadow: 0 0 20px var(--soft-purple); border: 1px solid var(--moon-gold); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -181,9 +128,7 @@
     <div class="bg-symbol" style="top:40%; left:55%;">♃</div>
 </div>
 
-<header>
-    <h1>🌙 SAILOR FUKUOKA 🌙</h1>
-</header>
+<header><h1>🌙 SAILOR FUKUOKA 🌙</h1></header>
 
 <div class="main-content">
     <!-- Day 1 -->
@@ -195,22 +140,15 @@
                 <div class="time-item">
                     <h3>中午：機場午餐 & 飯店 Check-in</h3>
                     <p>機場午餐，搭地鐵至<a href="https://www.google.com/maps/search/?api=1&query=福岡天神站" target="_blank" class="map-link">天神站</a>。</p>
-                    <div class="note-box">
-                        📌 <strong>重要備註：</strong>天神站西6出口連通 <a href="https://www.google.com/maps/search/?api=1&query=SOLARIA+PLAZA" target="_blank" class="map-link">SOLARIA PLAZA</a>，Lobby位於 6F。
-                    </div>
+                    <div class="note-box">📌 <strong>備註：</strong>西6出口連通 <a href="https://www.google.com/maps/search/?api=1&query=SOLARIA+PLAZA" target="_blank" class="map-link">SOLARIA PLAZA</a>，Lobby位於 6F。</div>
                 </div>
                 <div class="time-item">
-                    <h3>下午：寵物用品、動漫周邊與天神地下街</h3>
-                    <p>在 SOLARIA PLAZA 內逛 <a href="https://www.google.com/maps/search/?api=1&query=P2+ソラリアプラザ店" target="_blank" class="map-link">P2 Solaria Plaza店</a>。</p>
-                    <p>隨後逛<a href="https://www.google.com/maps/search/?api=1&query=天神地下街" target="_blank" class="map-link">天神地下街</a>，造訪寵物店 <a href="https://www.google.com/maps/search/?api=1&query=ペットパラダイス+天神地下街店" target="_blank" class="map-link">Pet Paradise</a>，並直通 <a href="https://www.google.com/maps/search/?api=1&query=福岡PARCO" target="_blank" class="map-link">福岡PARCO</a>。</p>
-                    <p><strong>戰士必逛：</strong><a href="https://www.google.com/maps/search/?api=1&query=アニメイト福岡天神ビブレ" target="_blank" class="map-link">ANIMATE アニメイト福岡天神</a> 購買美少女戰士周邊。</p>
+                    <h3>下午：寵物用品、周邊與地下街</h3>
+                    <p>逛飯店內的 <a href="https://www.google.com/maps/search/?api=1&query=P2+ソラリアプラザ店" target="_blank" class="map-link">P2 Solaria店</a>。地下街必去：<a href="https://www.google.com/maps/search/?api=1&query=ペットパラダイス+天神地下街店" target="_blank" class="map-link">Pet Paradise</a>、<a href="https://www.google.com/maps/search/?api=1&query=福岡PARCO" target="_blank" class="map-link">PARCO</a> 及 <a href="https://www.google.com/maps/search/?api=1&query=アニメイト福岡天神" target="_blank" class="map-link">ANIMATE</a>。</p>
                 </div>
                 <div class="time-item">
-                    <h3>晚上：天神百貨攻略與晚餐</h3>
-                    <p>逛<a href="https://www.google.com/maps/search/?api=1&query=岩田屋本店" target="_blank" class="map-link">岩田屋本店</a>、<a href="https://www.google.com/maps/search/?api=1&query=福岡三越" target="_blank" class="map-link">福岡三越</a>及<a href="https://www.google.com/maps/search/?api=1&query=大丸+福岡天神店" target="_blank" class="map-link">大丸</a>。</p>
-                    <p><strong>晚餐選項：</strong><br>
-                    1. <a href="https://www.google.com/maps/search/?api=1&query=但馬屋+ソラリアプラザ店" target="_blank" class="map-link">但馬屋 Solaria Plaza店</a><br>
-                    2. <a href="https://www.google.com/maps/search/?api=1&query=元祖もつ鍋楽天地+天神ソラリアステージ味の街店" target="_blank" class="map-link">元祖牛雜鍋樂天地 天神店</a></p>
+                    <h3>晚上：天神百貨與晚餐</h3>
+                    <p>攻略岩田屋、三越、大丸。晚餐：1. <a href="https://www.google.com/maps/search/?api=1&query=但馬屋+ソラリアプラザ店" target="_blank" class="map-link">但馬屋</a> 2. <a href="https://www.google.com/maps/search/?api=1&query=元祖もつ鍋楽天地+天神店" target="_blank" class="map-link">樂天地牛雜鍋</a>。</p>
                 </div>
             </div>
         </div>
@@ -222,33 +160,22 @@
         <div class="card">
             <div class="card-header theme-mercury">☿ Day 2: 博多核心與巨型鋼彈</div>
             <div class="card-body">
-                <div class="transport-tag">🚶 步行 / JR / 地鐵七隈線</div>
+                <div class="transport-tag">🚶 步行 / JR / 地鐵</div>
                 <div class="time-item">
-                    <h3>早上 10:00：BAO BAO 排隊行程</h3>
-                    <p>先前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">BAO BAO ISSEY MIYAKE 岩田屋福岡店</a> 排隊。</p>
+                    <h3>早上 10:00：BAO BAO 排隊</h3>
+                    <p>前往 <a href="https://www.google.com/maps/search/?api=1&query=BAO+BAO+ISSEY+MIYAKE+岩田屋本店" target="_blank" class="map-link">岩田屋 BAO BAO</a> 排隊。</p>
                 </div>
                 <div class="time-item">
                     <h3>早上 - 中午：博多車站大攻略</h3>
-                    <p>
-                        • 服飾購物：<a href="https://www.google.com/maps/search/?api=1&query=アミュエスト" target="_blank" class="map-link">AMU EST</a> (含 <a href="https://www.google.com/maps/search/?api=1&query=＠ｃｏｓｍｅ＋ｓｔｏｒｅ＋アミュエスト博多店" target="_blank" class="map-link">@cosme store</a>)<br>
-                        • 雜貨選物：<a href="https://www.google.com/maps/search/?api=1&query=ハンズ+博多店" target="_blank" class="map-link">Hands 博多店</a><br>
-                        • 伴手禮天堂：<a href="https://www.google.com/maps/search/?api=1&query=マイング" target="_blank" class="map-link">マイング (Maing)</a><br>
-                        • 藥妝：<a href="https://www.google.com/maps/search/?api=1&query=ドラッグストア+マツモトキヨシ+博多駅筑紫口店" target="_blank" class="map-link">松本清 (筑紫口店)</a>
-                    </p>
-                    <p>午餐：<a href="https://www.google.com/maps/search/?api=1&query=KITTE+HAKATA" target="_blank" class="map-link">KITTE博多</a>或<a href="https://www.google.com/maps/search/?api=1&query=博多麵街道" target="_blank" class="map-link">拉麵街道</a>。</p>
+                    <p>服飾：<a href="https://www.google.com/maps/search/?api=1&query=アミュエスト" target="_blank" class="map-link">AMU EST</a> (含 <a href="https://www.google.com/maps/search/?api=1&query=＠ｃｏｓｍｅ＋ｓｔｏｒｅ＋アミュエスト博多店" target="_blank" class="map-link">@cosme</a>)。雜貨：<a href="https://www.google.com/maps/search/?api=1&query=ハンズ+博多店" target="_blank" class="map-link">Hands</a>。伴手禮：<a href="https://www.google.com/maps/search/?api=1&query=マイング" target="_blank" class="map-link">Maing</a>。藥妝：<a href="https://www.google.com/maps/search/?api=1&query=松本清+博多站筑紫口店" target="_blank" class="map-link">松本清</a>。</p>
                 </div>
                 <div class="time-item">
                     <h3>下午：三井LaLaport 福岡</h3>
-                    <p>朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈</a>。</p>
+                    <p>搭 JR 到竹下站朝聖 <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡+鋼彈" target="_blank" class="map-link">1:1 實體大鋼彈</a>。</p>
                 </div>
                 <div class="time-item">
-                    <h3>晚上：博多運河城與回程超市</h3>
-                    <p>必逛：<a href="https://www.google.com/maps/search/?api=1&query=ガシャポンバンダイオフィシャルショップ+キャナルシティ博多店" target="_blank" class="map-link">扭蛋百貨</a>、<a href="https://www.google.com/maps/search/?api=1&query=マツモトキヨシ+キャナルシティ博多店" target="_blank" class="map-link">松本清美妝店</a>。</p>
-                    <p><strong>晚餐選項：</strong><br>
-                    1. <a href="https://www.google.com/maps/search/?api=1&query=ラーメンスタジアム" target="_blank" class="map-link">拉麵競技場</a>、2. <a href="https://www.google.com/maps/search/?api=1&query=鰻のエイト" target="_blank" class="map-link">鰻魚Eito</a>、3. <a href="https://www.google.com/maps/search/?api=1&query=博多天ぷらたかお+キャナルシティ博多店" target="_blank" class="map-link">天婦羅 TAKAO</a></p>
-                    <div class="note-box">
-                        🛒 <strong>回程必買：</strong>位於 Solaria Stage B1 的 <a href="https://maps.app.goo.gl/KjNGreFUCSo9ZY157" target="_blank" class="map-link">Reganet Cute 超市</a>，營業到 23:00。
-                    </div>
+                    <h3>晚上：運河城與回程超市</h3>
+                    <p>運河城：<a href="https://www.google.com/maps/search/?api=1&query=ガシャポンバンダイ+キャナルシティ博多" target="_blank" class="map-link">扭蛋百貨</a>。晚餐：拉麵競技場、鰻魚Eito、TAKAO。回程必買：<a href="https://maps.app.goo.gl/KjNGreFUCSo9ZY157" target="_blank" class="map-link">Reganet Cute 超市</a> (23:00關)。</p>
                 </div>
             </div>
         </div>
@@ -262,13 +189,12 @@
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
                 <div class="time-item">
-                    <h3>早上：警顧問神社與生活美學</h3>
-                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜購買御守，並在<a href="https://www.google.com/maps/search/?api=1&query=警固公園" target="_blank" class="map-link">公園</a>散步。</p>
-                    <p>隨後前往 <a href="https://www.google.com/maps/search/?api=1&query=無印良品+天神SHOPPERS福岡" target="_blank" class="map-link">無印良品 天神SHOPPERS福岡店</a>。</p>
+                    <h3>早上：神社與無印良品</h3>
+                    <p>到<a href="https://www.google.com/maps/search/?api=1&query=警固神社" target="_blank" class="map-link">警固神社</a>參拜購買御守，並逛全九州最大 <a href="https://www.google.com/maps/search/?api=1&query=無印良品+天神SHOPPERS福岡" target="_blank" class="map-link">無印良品 天神SHOPPERS店</a>。</p>
                 </div>
                 <div class="time-item">
-                    <h3>下午：博多 & 天神再次復盤</h3>
-                    <p>回到商圈針對想加強衝刺的店鋪進行深度復盤與最後採買。</p>
+                    <h3>下午：商圈再次復盤</h3>
+                    <p>回到博多或天神針對想補貨的店鋪進行深度復盤。</p>
                 </div>
                 <div class="time-item">
                     <h3>傍晚：博多頂樓夜景</h3>
@@ -283,17 +209,17 @@
         <img src="assets/3.png" class="character-img" alt="Venus">
     </div>
 
-    <!-- 地圖分頁 -->
+    <!-- 地圖頁 -->
     <div id="day5" class="day-panel">
         <div class="card">
             <div class="card-header theme-venus">🧡 地圖導覽與交通資訊</div>
             <div class="card-body">
                 <ul class="info-list">
-                    <li><a href="https://subway.city.fukuoka.lg.jp/cha_trad/route/deta/map.pdf" target="_blank" style="padding:15px;display:block;">🚇 福岡地鐵路線 (PDF)</a></li>
-                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8" target="_blank" style="padding:15px;display:block;">🗺️ 天神逛街地圖 いち (Google)</a></li>
-                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank" style="padding:15px;display:block;">🖼️ 天神逛街地圖 に (Instagram)</a></li>
-                    <li><a href="https://upd-api.funtime.com.tw/uploads/large__a1f3964883.png" target="_blank" style="padding:15px;display:block;">🖼️ 天神逛街地圖 さん (FunTime)</a></li>
-                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg" target="_blank" style="padding:15px;display:block;">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
+                    <li><a href="https://subway.city.fukuoka.lg.jp/cha_trad/route/deta/map.pdf" target="_blank">🚇 福岡地鐵路線 (PDF)</a></li>
+                    <li><a href="https://www.google.com/maps/d/viewer?mid=1LiPnb2FSia_1TsB-J4cJewi53BOpXt8" target="_blank">🗺️ 天神逛街地圖 いち (Google)</a></li>
+                    <li><a href="https://scontent-tpe1-1.cdninstagram.com/v/t51.82787-15/587276737_18541371910059720_4182579510236939765_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3NTg3Mjk4NTkxNjMzMzU2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RJTs37LHiTAQ7kNvwHazxf-&_nc_oc=AdoojEvENSwUs2Bfs_Tvx2dsn4SHa1QCvahueupvMhhJlCVBGVB36x5ZFN3VD6IoVqk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_gid=FmXeuwgVK1hUBry1fSVmyw&_nc_ss=7a22e&oh=00_Af5pmmvDhdbiklexuvJM3Tqi49IVqc0hZIddTtn7j8ubvA&oe=69FB5AB0" target="_blank">🖼️ 天神逛街地圖 に (Instagram)</a></li>
+                    <li><a href="https://upd-api.funtime.com.tw/uploads/large__a1f3964883.png" target="_blank">🖼️ 天神逛街地圖 さん (FunTime)</a></li>
+                    <li><a href="https://i0.wp.com/boo2k.com/wp-content/uploads/2026/03/fukuoka-tenjin-map.jpg" target="_blank">🖼️ 天神逛街地圖 し (Boo2k)</a></li>
                 </ul>
             </div>
         </div>
@@ -306,17 +232,13 @@
             <div class="card-header theme-chibi">💖 Day 4: 返程衝刺</div>
             <div class="card-body">
                 <div class="transport-tag">🚇 地鐵空港線</div>
-                <div class="time-item">
-                    <h3>福岡機場國際航廈</h3>
-                    <p>搭地鐵直達機場，在免稅店進行最後採買後回國！</p>
-                </div>
+                <div class="time-item"><h3>福岡機場國際航廈</h3><p>搭地鐵直達機場，在免稅店進行最後採買回國！</p></div>
             </div>
         </div>
         <img src="assets/4.png" class="character-img" alt="Chibimoon">
     </div>
 </div>
 
-<!-- 更新提示 UI -->
 <div id="update-toast" class="update-toast">
     <span>✨ 月亮力量！發現新行程資訊</span>
     <button onclick="refreshApp()">立即更新</button>
@@ -332,9 +254,15 @@
 
 <script>
     let newWorker;
-    function refreshApp() { if (newWorker) newWorker.postMessage('skipWaiting'); }
+    const toast = document.getElementById('update-toast');
+
+    function refreshApp() { 
+        if (newWorker) {
+            newWorker.postMessage('skipWaiting');
+            toast.classList.remove('show');
+        }
+    }
     
-    // 監聽當新 Service Worker 激活時自動刷新頁面
     navigator.serviceWorker.addEventListener('controllerchange', () => {
         window.location.reload();
     });
@@ -346,19 +274,18 @@
                 reg.update();
                 if (reg.waiting) {
                     newWorker = reg.waiting;
-                    document.getElementById('update-toast').classList.add('show');
+                    toast.classList.add('show');
                 }
                 reg.addEventListener('updatefound', () => {
                     newWorker = reg.installing;
                     newWorker.addEventListener('statechange', () => {
                         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            document.getElementById('update-toast').classList.add('show');
+                            toast.classList.add('show');
                         }
                     });
                 });
             });
         });
-
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
                 navigator.serviceWorker.ready.then(reg => reg.update());
