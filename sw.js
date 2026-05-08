@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sailor-fukuoka-FINAL';
+const CACHE_NAME = 'sailor-fukuoka-FinalF';
 const assets = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ self.addEventListener('install', e => {
   );
 });
 
+// 核心修正：接收指令後立即激活
 self.addEventListener('message', (event) => {
   if (event.data === 'skipWaiting') {
     self.skipWaiting();
